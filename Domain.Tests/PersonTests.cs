@@ -9,27 +9,32 @@ namespace Domain.Tests
     [TestFixture]
     public class PersonTests
     {
+        internal const double EmployeeBaseSalary = 1000;
+        internal const double EmployeeYearIncrement = 3;
+        internal const double EmployeeMaxYearIncrement = 30;
+
+        internal IEmployee CreateDefaultEmployee(DateTime? dateOfEmployement = null)
+        {
+            return new Employee(EmployeeBaseSalary, dateOfEmployement ?? SystemTime.Now);
+        }
+
         [Test]
         public void CountSalary_NewEmployee_ReturnBaseSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            const double baseSalary = 1000;
-            IEmployee employee = new Employee(baseSalary: 1000, dateOfEmployment: SystemTime.Now);
+            IEmployee employee = CreateDefaultEmployee();
 
             double salary = employee.CountSalary(SystemTime.Now);
 
-            Assert.AreEqual(baseSalary, salary);
+            Assert.AreEqual(EmployeeBaseSalary, salary);
         }
 
         [Test]
         public void CountSalary_OneYearEmployee_ReturnBaseSalaryWithOneYearIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            const int lenghtOfWork = 1;
-            var dateOfEmployment = SystemTime.Now.AddYears(-lenghtOfWork);
-            const double baseSalary = 1000;
-            IEmployee employee = new Employee(baseSalary, dateOfEmployment, 3);
-            double expectedSalary = baseSalary + (baseSalary / 100 * employee.YearSalaryIncrement * lenghtOfWork);
+            IEmployee employee = CreateDefaultEmployee(SystemTime.Now.AddYears(-1));
+            const double expectedSalary = EmployeeBaseSalary + (EmployeeBaseSalary / 100 * EmployeeYearIncrement * 1);
 
             double actualSalary = employee.CountSalary(SystemTime.Now);
 
@@ -40,11 +45,8 @@ namespace Domain.Tests
         public void CountSalary_FiftyYearEmployee_ReturnBaseSalaryWithMaxYearIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            var dateOfEmployment = SystemTime.Now.AddYears(-50);
-            const double baseSalary = 1000;
-            const double maxYearIncrement = 30;
-            IEmployee employee = new Employee(baseSalary, dateOfEmployment, maxYearIncrement: maxYearIncrement);
-            const double expectedSalary = baseSalary + (baseSalary / 100 * maxYearIncrement);
+            IEmployee employee = new Employee(EmployeeBaseSalary, SystemTime.Now.AddYears(-50));
+            const double expectedSalary = EmployeeBaseSalary + (EmployeeBaseSalary / 100 * EmployeeMaxYearIncrement);
 
             double actualSalary = employee.CountSalary(SystemTime.Now);
 

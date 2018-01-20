@@ -53,7 +53,9 @@ namespace Domain.Core.Entities
         {
             double lengthOfWork = GetLengthOfWork(upToDate);
             double increment = lengthOfWork * YearSalaryIncrement;
-            return increment > MaxYearIncrement ? (BaseSalary / 100) * MaxYearIncrement : (BaseSalary / 100) * increment;
+            return increment > MaxYearIncrement
+                ? (BaseSalary / 100) * MaxYearIncrement
+                : (BaseSalary / 100) * increment;
         }
 
         private double GetLengthOfWork(DateTime? upToDate = null)
