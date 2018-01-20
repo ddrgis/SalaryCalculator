@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Core.Entities;
+﻿using Domain.Core.Entities;
 using Domain.Core.Interfaces;
 using Domain.Core.Services;
 using NUnit.Framework;
-
+using System;
 
 namespace Domain.Tests
 {
@@ -18,9 +13,8 @@ namespace Domain.Tests
         public void CountSalary_NewEmployee_ReturnBaseSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            var dateOfEmployment = SystemTime.Now;
             const double baseSalary = 1000;
-            IEmployee employee = new Employee(baseSalary, dateOfEmployment);
+            IEmployee employee = new Employee(baseSalary: 1000, dateOfEmployment: SystemTime.Now);
 
             double salary = employee.CountSalary(SystemTime.Now);
 

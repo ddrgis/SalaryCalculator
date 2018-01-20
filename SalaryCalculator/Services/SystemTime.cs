@@ -4,7 +4,7 @@ namespace Domain.Core.Services
 {
     /// <summary>
     /// Обертка над DateTime с возможностью подмены текущего времени в целях тестирования
-    /// </summary> 
+    /// </summary>
     public class SystemTime
     {
         private static DateTime _date;

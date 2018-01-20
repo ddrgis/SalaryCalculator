@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Domain.Core.Interfaces;
-using Domain.Core.Services;
 
 namespace Domain.Core.Entities
 {
     public class Employee : Person
     {
-
         public Employee(double baseSalary, DateTime dateOfEmployment, double yearSalaryIncrement = 3)
         {
             BaseSalary = baseSalary;
