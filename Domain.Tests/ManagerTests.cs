@@ -18,7 +18,7 @@ namespace Domain.Tests
         public void CountSalary_NewManagerWithFewSubordinates_ReturnSalaryWithIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee manager = new Manager
+            IEmployee manager = new Manager()
             {
                 BaseSalary = 2000,
                 DateOfEmployment = SystemTime.Now,
