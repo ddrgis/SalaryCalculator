@@ -4,10 +4,12 @@ namespace Domain.Core.Entities
 {
     public class Employee : Person
     {
-        public Employee(double baseSalary, DateTime dateOfEmployment, double yearSalaryIncrement = 3)
+        public Employee(double baseSalary, DateTime dateOfEmployment, double yearSalaryIncrement = 3, double maxYearIncrement = 30)
         {
             BaseSalary = baseSalary;
             DateOfEmployment = dateOfEmployment;
+            YearSalaryIncrement = yearSalaryIncrement;
+            MaxYearIncrement = maxYearIncrement;
         }
 
         public override double CountSalary(DateTime? payDate)
