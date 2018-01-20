@@ -52,5 +52,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SalaryCalculator\Domain.Core.csproj">
+      <Project>{7216ddf0-f9e5-4be7-a2d9-3e1658900fc1}</Project>
+      <Name>Domain.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

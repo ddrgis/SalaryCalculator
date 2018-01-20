@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Core.Services;
 using NUnit.Framework;
 
 
@@ -15,7 +16,7 @@ namespace Domain.Tests
         public void CountSalary_NewEmployee_ReturnBaseSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            double dateOfEmployment = SystemTime.Now;
+            var dateOfEmployment = SystemTime.Now;
             const double baseSalary = 1000;
             IEmployee employee = new Employee(baseSalary, dateOfEmployment);
 
