@@ -1,16 +1,23 @@
-﻿using System;
-using System.Xml.Schema;
-using Domain.Core.Interfaces;
+﻿using Domain.Core.Interfaces;
 using Domain.Core.Services;
+using System;
 
 namespace Domain.Core.Entities
 {
     public abstract class Person : IEmployee
     {
-        public DateTime DateOfEmployment { get; set; }
         public double BaseSalary { get; set; }
+        public DateTime DateOfEmployment { set; get; }
         public double YearSalaryIncrement { get; set; }
         public double MaxYearIncrement { get; set; }
+
+        protected Person(double baseSalary, DateTime dateOfEmployment, double yearSalaryIncrement, double maxYearIncrement)
+        {
+            BaseSalary = baseSalary;
+            DateOfEmployment = dateOfEmployment;
+            YearSalaryIncrement = yearSalaryIncrement;
+            MaxYearIncrement = maxYearIncrement;
+        }
 
         public abstract double CountSalary(DateTime? payDate);
 

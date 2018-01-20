@@ -22,7 +22,7 @@ namespace Domain.Tests
         }
 
         [Test]
-        public void CountSalary_OneYearEmployee_ReturnBaseSalaryWithYearIncrement()
+        public void CountSalary_OneYearEmployee_ReturnBaseSalaryWithOneYearIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
             const int lenghtOfWork = 1;
@@ -37,11 +37,10 @@ namespace Domain.Tests
         }
 
         [Test]
-        public void CountSalary_FiftyYearEmployee_ReturnBaseSalaryWithMaxIncrement()
+        public void CountSalary_FiftyYearEmployee_ReturnBaseSalaryWithMaxYearIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            const int lenghtOfWork = 50;
-            var dateOfEmployment = SystemTime.Now.AddYears(-lenghtOfWork);
+            var dateOfEmployment = SystemTime.Now.AddYears(-50);
             const double baseSalary = 1000;
             const double maxYearIncrement = 30;
             IEmployee employee = new Employee(baseSalary, dateOfEmployment, maxYearIncrement: maxYearIncrement);
