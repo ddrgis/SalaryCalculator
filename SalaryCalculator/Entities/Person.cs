@@ -2,7 +2,7 @@
 
 namespace SalaryCalculator
 {
-    public class Class1
+    public class Person
     {
     }
 }
