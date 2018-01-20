@@ -18,17 +18,16 @@ namespace Domain.Tests
         public void CountSalary_NewManagerWithFewSubordinates_ReturnSalaryWithIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee manager = new Manager()
-            {
-                BaseSalary = 2000,
-                DateOfEmployment = SystemTime.Now,
-                SubordinatesIncrement = 0.5,
-                Subordinates = new List<IEmployee>
+            IEmployee manager = new Manager(
+                baseSalary: 2000,
+                dateOfEmployment: SystemTime.Now,
+                subordinatesIncrement: 0.5,
+                subordinates: new List<IEmployee>
                 {
                     new Employee(baseSalary: 1000, dateOfEmployment: SystemTime.Now),
                     new Employee(baseSalary: 1000, dateOfEmployment: SystemTime.Now)
                 }
-            };
+            );
 
             double salary = manager.CountSalary(SystemTime.Now);
 

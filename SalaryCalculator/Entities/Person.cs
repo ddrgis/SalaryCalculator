@@ -16,11 +16,6 @@ namespace Domain.Core.Entities
         public double SubordinatesIncrement { get; set; }
         public List<IEmployee> Subordinates { get; set; }
 
-        protected Person()
-        {
-            
-        }
-
         protected Person(double baseSalary, DateTime dateOfEmployment, double yearSalaryIncrement, double maxYearIncrement,
                          double subordinatesIncrement = 0, List<IEmployee> subordinates = null)
         {
