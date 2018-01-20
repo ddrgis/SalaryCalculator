@@ -36,6 +36,22 @@ namespace Domain.Tests
             Assert.AreEqual(expectedSalary, actualSalary);
         }
 
+        [Test]
+        public void CountSalary_FiftyYearEmployee_ReturnBaseSalaryWithMaxIncrement()
+        {
+            SystemTime.Set(new DateTime(2000, 1, 1));
+            const int lenghtOfWork = 50;
+            var dateOfEmployment = SystemTime.Now.AddYears(-lenghtOfWork);
+            const double baseSalary = 1000;
+            const double maxYearIncrement = 30;
+            IEmployee employee = new Employee(baseSalary, dateOfEmployment, maxYearIncrement: maxYearIncrement);
+            const double expectedSalary = baseSalary + (baseSalary / 100 * maxYearIncrement);
+
+            double actualSalary = employee.CountSalary(SystemTime.Now);
+
+            Assert.AreEqual(expectedSalary, actualSalary);
+        }
+
         [TearDown]
         public void ResetAfterEachTest()
         {
