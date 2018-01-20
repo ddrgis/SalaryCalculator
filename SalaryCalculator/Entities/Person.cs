@@ -46,7 +46,7 @@ namespace Domain.Core.Entities
                 return 0;
             }
 
-            return Subordinates.Aggregate(0.0, (acc, emp) => acc + emp.CountSalary(upToDate) / 100 * SubordinatesIncrement);
+            return Subordinates.Aggregate(0.0, (acc, emp) => acc + emp.CountSalary(upToDate)) / 100 * SubordinatesIncrement;
         }
 
         private double GetYearIncrement(DateTime? upToDate = null)
