@@ -24,7 +24,7 @@ namespace Domain.Core.Services
         /// <summary>
         /// Возвращает целое количество прошедних лет между двумя датами
         /// </summary>
-        public static int PeriodYears(DateTime startDate, DateTime endDate)
+        public static int PassedYears(DateTime startDate, DateTime endDate)
         {
             // По хорошему стояло для работы со вмеренем использовать готовую библиотеку вроде NodaTime
             return (endDate.Year - startDate.Year - 1) +

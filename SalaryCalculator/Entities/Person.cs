@@ -24,7 +24,7 @@ namespace Domain.Core.Entities
 
         private double GetLengthOfWork(DateTime? upToDate = null)
         {
-            return SystemTime.PeriodYears(DateOfEmployment, upToDate ?? SystemTime.Now);
+            return SystemTime.PassedYears(DateOfEmployment, upToDate ?? SystemTime.Now);
         }
     }
 }
