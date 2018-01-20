@@ -12,9 +12,22 @@ namespace Domain.Tests
     public class PersonTests
     {
         [Test]
-        public void Test()
+        public void CountSalary_NewEmployee_ReturnBaseSalary()
         {
-            Assert.Pass("Test");
+            SystemTime.Set(new DateTime(2000, 1, 1));
+            double dateOfEmployment = SystemTime.Now;
+            const double baseSalary = 1000;
+            IEmployee employee = new Employee(baseSalary, dateOfEmployment);
+
+            double salary = employee.CountSalary(SystemTime.Now);
+
+            Assert.AreEqual(baseSalary, salary);
+        }
+
+        [TearDown]
+        public void ResetAfterEachTest()
+        {
+            SystemTime.Reset();
         }
     }
 }
