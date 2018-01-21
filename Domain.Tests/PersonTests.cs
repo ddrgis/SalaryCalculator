@@ -1,5 +1,4 @@
-﻿using Domain.Core.Entities;
-using Domain.Core.Interfaces;
+﻿using Domain.Core.Interfaces;
 using Domain.Core.Services;
 using NUnit.Framework;
 using System;
@@ -17,6 +16,17 @@ namespace Domain.Tests
             IEmployee employee = CreateDefaultEmployee();
 
             double salary = employee.CountSalary(SystemTime.Now);
+
+            Assert.AreEqual(EmployeeBaseSalary, salary);
+        }
+
+        [Test]
+        public void CountSalary_WithoutPayDateInput_ReturnBaseSalary()
+        {
+            SystemTime.Set(new DateTime(2000, 1, 1));
+            IEmployee employee = CreateDefaultEmployee();
+
+            double salary = employee.CountSalary();
 
             Assert.AreEqual(EmployeeBaseSalary, salary);
         }

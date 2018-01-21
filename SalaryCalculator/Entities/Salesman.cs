@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Core.Services;
 
 namespace Domain.Core.Entities
 {
@@ -17,7 +18,7 @@ namespace Domain.Core.Entities
         {
             if (payDate == null)
             {
-                payDate = DateTime.Now;
+                payDate = SystemTime.Now;
             }
 
             return BaseSalary + CountSalaryIncrement(payDate);

@@ -1,4 +1,5 @@
 ﻿using System;
+using Domain.Core.Services;
 
 namespace Domain.Core.Entities
 {
@@ -9,11 +10,11 @@ namespace Domain.Core.Entities
         {
         }
 
-        public override double CountSalary(DateTime? payDate)
+        public override double CountSalary(DateTime? payDate = null)
         {
             if (payDate == null)
             {
-                payDate = DateTime.Now;
+                payDate = SystemTime.Now;
             }
 
             return BaseSalary + CountSalaryIncrement(payDate);

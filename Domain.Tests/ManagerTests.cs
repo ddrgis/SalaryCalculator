@@ -26,6 +26,21 @@ namespace Domain.Tests
         }
 
         [Test]
+        public void CountSalary_WithoutPayDateInput_ReturnSalaryWithIncrement()
+        {
+            SystemTime.Set(new DateTime(2000, 1, 1));
+            IEmployee manager = CreateDefaultManager();
+            manager.Subordinates = new List<IEmployee> {
+                CreateDefaultEmployee(),
+                CreateDefaultEmployee()
+            };
+
+            double salary = manager.CountSalary();
+
+            Assert.AreEqual(ManagerBaseSalary + 2 * EmployeeBaseSalary * ManagerSubordinatesIncrement / 100, salary);
+        }
+
+        [Test]
         public void CountSalary_NewManagerWithEmployeeSubordinates_ReturnSalaryWithIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
@@ -65,7 +80,7 @@ namespace Domain.Tests
 
             double salary = manager.CountSalary(SystemTime.Now);
 
-            Assert.AreEqual(ManagerBaseSalary + (ManagerBaseSalary / 100 * ManagerYearIncrement * 5) + 
+            Assert.AreEqual(ManagerBaseSalary + (ManagerBaseSalary / 100 * ManagerYearIncrement * 5) +
                             ((subordinateEmployeesSalary + subordinateManagerSalary) * 0.5 / 100),
                 actual: salary,
                 delta: 1);

@@ -11,7 +11,7 @@ namespace Domain.Core.Interfaces
         List<IEmployee> Subordinates { get; set; }
         double SubordinateIncrement { get; set; }
 
-        double CountSalary(DateTime? payDate);
-        double GetSubordinatesIncrement(DateTime? upToDate);
+        double CountSalary(DateTime? payDate = null);
+        double GetSubordinatesIncrement(DateTime? upToDate = null);
     }
 }

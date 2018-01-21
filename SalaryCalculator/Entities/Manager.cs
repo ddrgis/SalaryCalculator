@@ -2,6 +2,7 @@
 using Domain.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using Domain.Core.Services;
 
 namespace Domain.Core
 {
@@ -13,11 +14,11 @@ namespace Domain.Core
         {
         }
 
-        public override double CountSalary(DateTime? payDate)
+        public override double CountSalary(DateTime? payDate = null)
         {
             if (payDate == null)
             {
-                payDate = DateTime.Now;
+                payDate = SystemTime.Now;
             }
 
             return BaseSalary + CountSalaryIncrement(payDate);
