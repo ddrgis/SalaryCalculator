@@ -43,7 +43,7 @@ namespace Domain.Tests
         }
 
         [Test]
-        public void CountSalary_OldManagerWithEmployeeSubordinates_ReturnSalaryWithIncrement()
+        public void CountSalary_OldManagerWithTreelikeSubordinates_ReturnSalaryWithIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
             IEmployee manager = CreateDefaultManager(lengthOfWork: 5);

@@ -16,6 +16,11 @@ namespace Domain.Tests
         internal static double ManagerMaxYearIncrement = 40;
         internal static double ManagerSubordinatesIncrement = 0.5;
 
+        internal static double SalesmanBaseSalary = 3000;
+        internal static double SalesmanYearIncrement = 1;
+        internal static double SalesmanMaxYearIncrement = 35;
+        internal static double SalesmanSubordinatesIncrement = 0.3;
+
         internal static IEmployee CreateDefaultEmployee(int lengthOfWork = 0)
         {
             return new Employee(baseSalary: EmployeeBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
@@ -23,7 +28,12 @@ namespace Domain.Tests
 
         internal static IEmployee CreateDefaultManager(int lengthOfWork = 0)
         {
-            return new Manager(baseSalary: 2000, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
+            return new Manager(baseSalary: ManagerBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
+        }
+
+        internal static IEmployee CreateDefaultSalesman(int lengthOfWork = 0)
+        {
+            return new Manager(baseSalary: SalesmanBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
         }
     }
 }
