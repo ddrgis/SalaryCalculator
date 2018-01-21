@@ -3,7 +3,7 @@ using Domain.Core.Entities;
 using Domain.Core.Interfaces;
 using Domain.Core.Services;
 
-namespace Domain.Tests
+namespace Domain.Tests.EntitiesTests
 {
     public static class TestUtils
     {

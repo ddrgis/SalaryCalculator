@@ -1,6 +1,6 @@
-﻿using Domain.Core.Services;
+﻿using System;
+using Domain.Core.Services;
 using NUnit.Framework;
-using System;
 
 namespace Domain.Tests
 {

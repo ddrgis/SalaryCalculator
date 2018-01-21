@@ -3,7 +3,7 @@ using Domain.Core.Services;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using static Domain.Tests.TestUtils;
+using static Domain.Tests.EntitiesTests.TestUtils;
 
 namespace Domain.Tests
 {
