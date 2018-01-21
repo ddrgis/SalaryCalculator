@@ -10,7 +10,7 @@ namespace Domain.Core.Entities
         {
         }
 
-        public override double CountSalary(DateTime? payDate = null)
+        public override double CountSalary(DateTime? payDate)
         {
             if (payDate == null)
             {

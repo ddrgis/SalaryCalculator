@@ -14,7 +14,7 @@ namespace Domain.Core
         {
         }
 
-        public override double CountSalary(DateTime? payDate = null)
+        public override double CountSalary(DateTime? payDate)
         {
             if (payDate == null)
             {

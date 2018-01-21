@@ -49,7 +49,7 @@ namespace Domain.Core.Entities
             return Subordinates.Aggregate(0.0, (acc, emp) => acc + emp.CountSalary(upToDate)) / 100 * SubordinateIncrement;
         }
 
-        private double GetYearIncrement(DateTime? upToDate = null)
+        private double GetYearIncrement(DateTime? upToDate)
         {
             double lengthOfWork = GetLengthOfWork(upToDate);
             double increment = lengthOfWork * YearSalaryIncrement;
@@ -58,7 +58,7 @@ namespace Domain.Core.Entities
                 : (BaseSalary / 100) * increment;
         }
 
-        private double GetLengthOfWork(DateTime? upToDate = null)
+        private double GetLengthOfWork(DateTime? upToDate)
         {
             return SystemTime.PassedYears(DateOfEmployment, upToDate ?? SystemTime.Now);
         }
