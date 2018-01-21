@@ -9,8 +9,9 @@ namespace Domain.Core.Interfaces
         DateTime DateOfEmployment { get; set; }
         double YearSalaryIncrement { get; set; }
         List<IEmployee> Subordinates { get; set; }
-        double SubordinatesIncrement { get; set; }
+        double SubordinateIncrement { get; set; }
 
         double CountSalary(DateTime? payDate);
+        double GetSubordinatesIncrement(DateTime? upToDate);
     }
 }

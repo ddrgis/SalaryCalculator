@@ -13,7 +13,7 @@ namespace Domain.Core.Entities
         public DateTime DateOfEmployment { set; get; }
         public double YearSalaryIncrement { get; set; }
         public double MaxYearIncrement { get; set; }
-        public double SubordinatesIncrement { get; set; }
+        public double SubordinateIncrement { get; set; }
         public List<IEmployee> Subordinates { get; set; }
 
         protected Person(double baseSalary, DateTime dateOfEmployment, double yearSalaryIncrement, double maxYearIncrement,
@@ -23,7 +23,7 @@ namespace Domain.Core.Entities
             DateOfEmployment = dateOfEmployment;
             YearSalaryIncrement = yearSalaryIncrement;
             MaxYearIncrement = maxYearIncrement;
-            SubordinatesIncrement = subordinatesIncrement;
+            SubordinateIncrement = subordinatesIncrement;
             Subordinates = subordinates;
         }
 
@@ -39,14 +39,14 @@ namespace Domain.Core.Entities
             return GetYearIncrement(payDate) + GetSubordinatesIncrement(payDate);
         }
 
-        private double GetSubordinatesIncrement(DateTime? upToDate)
+        public virtual double GetSubordinatesIncrement(DateTime? upToDate)
         {
             if (Subordinates == null)
             {
                 return 0;
             }
 
-            return Subordinates.Aggregate(0.0, (acc, emp) => acc + emp.CountSalary(upToDate)) / 100 * SubordinatesIncrement;
+            return Subordinates.Aggregate(0.0, (acc, emp) => acc + emp.CountSalary(upToDate)) / 100 * SubordinateIncrement;
         }
 
         private double GetYearIncrement(DateTime? upToDate = null)

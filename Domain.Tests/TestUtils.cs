@@ -33,7 +33,7 @@ namespace Domain.Tests
 
         internal static IEmployee CreateDefaultSalesman(int lengthOfWork = 0)
         {
-            return new Manager(baseSalary: SalesmanBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
+            return new Salesman(baseSalary: SalesmanBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
         }
     }
 }
