@@ -1,14 +1,17 @@
 ﻿using Domain.Core.Interfaces;
 using Domain.Core.Services;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Transactions;
+using System.Linq;
 
 namespace Domain.Core.Entities
 {
     public abstract class Person : IEmployee
     {
+        public int Id { get; set; }
+        public int? SuperiorId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public double BaseSalary { get; set; }
         public DateTime DateOfEmployment { set; get; }
         public double YearSalaryIncrement { get; set; }
