@@ -1,16 +1,16 @@
 ﻿using Domain.Core.Interfaces;
+using Domain.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.Core.Services;
 
 namespace Domain.Core.Entities
 {
     public class Salesman : Person
     {
-        public Salesman(double baseSalary, DateTime dateOfEmployment, double yearSalaryIncrement = 1, double maxYearIncrement = 35,
-                        double subordinatesIncrement = 0.3, List<IEmployee> subordinates = null)
-            : base(baseSalary, dateOfEmployment, yearSalaryIncrement, maxYearIncrement, subordinatesIncrement, subordinates)
+        public Salesman(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 1,
+            double maxPercentageIncrementForYear = 35, double percentagesIncrementFromSubordinates = 0.3, List<IEmployee> subordinates = null)
+            : base(baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear, percentagesIncrementFromSubordinates, subordinates)
         {
         }
 
@@ -24,25 +24,25 @@ namespace Domain.Core.Entities
             return BaseSalary + CountSalaryIncrement(payDate);
         }
 
-        public override double GetSubordinatesIncrement(DateTime? upToDate)
+        public override double GetIncrementFromSubordinates(DateTime? upToDate)
         {
             if (Subordinates == null)
             {
                 return 0;
             }
 
-            double allSubordinatesSalary = Subordinates.Aggregate(0.0, Iter);
+            double allSubordinatesSalary = Subordinates.Aggregate(0.0, Iterator);
 
-            return allSubordinatesSalary * SubordinateIncrement / 100;
+            return allSubordinatesSalary * PercentageIncrementFromSubordinates / 100;
 
-            double Iter(double acc, IEmployee currentSubordinate)
+            double Iterator(double accamulator, IEmployee currentSubordinate)
             {
                 if (currentSubordinate.Subordinates != null)
                 {
-                    return currentSubordinate.CountSalary(upToDate) + currentSubordinate.Subordinates.Aggregate(acc, Iter);
+                    return currentSubordinate.CountSalary(upToDate) + currentSubordinate.Subordinates.Aggregate(accamulator, Iterator);
                 }
 
-                return acc + currentSubordinate.CountSalary(upToDate);
+                return accamulator + currentSubordinate.CountSalary(upToDate);
             }
         }
     }

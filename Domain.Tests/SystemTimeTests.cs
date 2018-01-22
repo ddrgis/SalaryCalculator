@@ -1,6 +1,6 @@
-﻿using System;
-using Domain.Core.Services;
+﻿using Domain.Core.Services;
 using NUnit.Framework;
+using System;
 
 namespace Domain.Tests
 {
@@ -14,8 +14,8 @@ namespace Domain.Tests
         [TestCase("2017.11.02", "2020.5.01", 2)]
         public void PassedYears_InputCorrectDates_RightOutput(string startDate, string endDate, int yearDiff)
         {
-            var start = DateTime.Parse(startDate);
-            var end = DateTime.Parse(endDate);
+            DateTime start = DateTime.Parse(startDate);
+            DateTime end = DateTime.Parse(endDate);
 
             int actualYearDiff = SystemTime.PassedYears(start, end);
 

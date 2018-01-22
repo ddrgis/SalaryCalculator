@@ -3,42 +3,41 @@ using Domain.Core.Services;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using static Domain.Tests.EntitiesTests.TestUtils;
 
-namespace Domain.Tests
+namespace Domain.Tests.EntitiesTests
 {
     [TestFixture]
     public class SalesmanTests
     {
         [Test]
-        public void CountSalary_OldSalesmanWithTreelikeSubordinates_ReturnSalaryWithIncrement()
+        public void CountSalary_OldSalesmanWithTreelikeSubordinates_ReturnIncrementedSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee salesman = CreateDefaultSalesman(lengthOfWork: 4);
+            IEmployee salesman = TestUtils.CreateDefaultSalesman(lengthOfWork: 4);
             salesman.Subordinates = new List<IEmployee> {
-                CreateDefaultEmployee(lengthOfWork: 5),
-                CreateDefaultEmployee(lengthOfWork: 40)
+                TestUtils.CreateDefaultEmployee(lengthOfWork: 5),
+                TestUtils.CreateDefaultEmployee(lengthOfWork: 40)
             };
-            IEmployee subordinateManager = CreateDefaultManager(lengthOfWork: 2);
+            IEmployee subordinateManager = TestUtils.CreateDefaultManager(lengthOfWork: 2);
             subordinateManager.Subordinates = new List<IEmployee> {
-                CreateDefaultEmployee(lengthOfWork: 2),
-                CreateDefaultEmployee(lengthOfWork: 2)
+                TestUtils.CreateDefaultEmployee(lengthOfWork: 2),
+                TestUtils.CreateDefaultEmployee(lengthOfWork: 2)
             };
             salesman.Subordinates.Add(subordinateManager);
-            double subordinateManagerSalary = ManagerBaseSalary + (ManagerBaseSalary / 100 * ManagerYearIncrement * 2) +
-                                              (2 * (EmployeeBaseSalary + EmployeeBaseSalary / 100 * 2 * EmployeeYearIncrement) * ManagerSubordinatesIncrement / 100);
-            double subordinateEmployeesSalary = 2 * EmployeeBaseSalary +
-                                                EmployeeBaseSalary / 100 * 5 * EmployeeYearIncrement +
-                                                EmployeeBaseSalary / 100 * EmployeeMaxYearIncrement;
+            double subordinateManagerSalary = TestUtils.ManagerBaseSalary + (TestUtils.ManagerBaseSalary / 100 * TestUtils.ManagerIncrementForYear * 2) +
+                                              (2 * (TestUtils.EmployeeBaseSalary + TestUtils.EmployeeBaseSalary / 100 * 2 * TestUtils.EmployeeIncrementForYear) * TestUtils.ManagerIncrementFromSubordinates / 100);
+            double subordinateEmployeesSalary = 2 * TestUtils.EmployeeBaseSalary +
+                                                TestUtils.EmployeeBaseSalary / 100 * 5 * TestUtils.EmployeeIncrementForYear +
+                                                TestUtils.EmployeeBaseSalary / 100 * TestUtils.EmployeeIncrementForMaxYears;
             double level2SubordinatesSalary =
-                2 * (EmployeeBaseSalary + EmployeeBaseSalary / 100 * 2 * EmployeeYearIncrement);
+                2 * (TestUtils.EmployeeBaseSalary + TestUtils.EmployeeBaseSalary / 100 * 2 * TestUtils.EmployeeIncrementForYear);
             double allSubordinatesSalary =
                 subordinateEmployeesSalary + subordinateManagerSalary + level2SubordinatesSalary;
 
             double salary = salesman.CountSalary(SystemTime.Now);
 
-            Assert.AreEqual(SalesmanBaseSalary + (SalesmanBaseSalary / 100 * SalesmanYearIncrement * 4) +
-                            (allSubordinatesSalary * SalesmanSubordinatesIncrement / 100),
+            Assert.AreEqual(TestUtils.SalesmanBaseSalary + (TestUtils.SalesmanBaseSalary / 100 * TestUtils.SalesmanIncrementForYear * 4) +
+                            (allSubordinatesSalary * TestUtils.SalesmanIncrementFromSubordinates / 100),
                 actual: salary,
                 delta: 1);
         }

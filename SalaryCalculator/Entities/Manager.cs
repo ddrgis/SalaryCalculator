@@ -1,16 +1,15 @@
-﻿using Domain.Core.Entities;
-using Domain.Core.Interfaces;
+﻿using Domain.Core.Interfaces;
+using Domain.Core.Services;
 using System;
 using System.Collections.Generic;
-using Domain.Core.Services;
 
-namespace Domain.Core
+namespace Domain.Core.Entities
 {
     public class Manager : Person
     {
-        public Manager(double baseSalary, DateTime dateOfEmployment, double yearSalaryIncrement = 5, double maxYearIncrement = 40,
-                      double subordinatesIncrement = 0.5, List<IEmployee> subordinates = null)
-           : base(baseSalary, dateOfEmployment, yearSalaryIncrement, maxYearIncrement, subordinatesIncrement, subordinates)
+        public Manager(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 5, double maxPercentageIncrementForYear = 40,
+                      double percentagesIncrementFromSubordinates = 0.5, List<IEmployee> subordinates = null)
+           : base(baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear, percentagesIncrementFromSubordinates, subordinates)
         {
         }
 

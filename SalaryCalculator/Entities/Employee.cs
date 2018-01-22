@@ -1,12 +1,13 @@
-﻿using System;
-using Domain.Core.Services;
+﻿using Domain.Core.Services;
+using System;
 
 namespace Domain.Core.Entities
 {
     public class Employee : Person
     {
-        public Employee(double baseSalary, DateTime dateOfEmployment, double yearSalaryIncrement = 3, double maxYearIncrement = 30) 
-            : base(baseSalary, dateOfEmployment, yearSalaryIncrement, maxYearIncrement)
+        public Employee(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 3,
+            double maxPercentageIncrementForYear = 30)
+            : base(baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear)
         {
         }
 

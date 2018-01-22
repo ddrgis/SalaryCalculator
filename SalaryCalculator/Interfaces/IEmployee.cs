@@ -7,11 +7,11 @@ namespace Domain.Core.Interfaces
     {
         double BaseSalary { get; set; }
         DateTime DateOfEmployment { get; set; }
-        double YearSalaryIncrement { get; set; }
+        double PercentageIncrementForYear { get; set; }
         List<IEmployee> Subordinates { get; set; }
-        double SubordinateIncrement { get; set; }
+        double PercentageIncrementFromSubordinates { get; set; }
 
         double CountSalary(DateTime? payDate = null);
-        double GetSubordinatesIncrement(DateTime? upToDate = null);
+        double GetIncrementFromSubordinates(DateTime? upToDate = null);
     }
 }
