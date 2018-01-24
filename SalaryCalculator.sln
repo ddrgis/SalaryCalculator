@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSalaryCalculator", "ConsoleSalaryCalculator\ConsoleSalaryCalculator.csproj", "{4029A16A-44C2-4D74-A22B-5DF371D9F428}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{EA1EB769-EE58-45F2-8977-88756BBCB8DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4029A16A-44C2-4D74-A22B-5DF371D9F428}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4029A16A-44C2-4D74-A22B-5DF371D9F428}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4029A16A-44C2-4D74-A22B-5DF371D9F428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA1EB769-EE58-45F2-8977-88756BBCB8DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA1EB769-EE58-45F2-8977-88756BBCB8DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA1EB769-EE58-45F2-8977-88756BBCB8DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA1EB769-EE58-45F2-8977-88756BBCB8DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7216DDF0-F9E5-4BE7-A2D9-3E1658900FC1} = {D6E4F10D-050E-41C2-B649-F5E0C6694E84}
 		{1A7E69E1-407C-4171-959A-B089E3BE457A} = {D6E4F10D-050E-41C2-B649-F5E0C6694E84}
+		{EA1EB769-EE58-45F2-8977-88756BBCB8DC} = {A3C10B3F-66CE-477C-866E-F846E8F4D52D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {56B58DF3-C8A0-4ABA-98AA-EAF23118A29C}

@@ -1,31 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Linq;
 using System.Data.SQLite;
+using System.Data.SQLite.Linq;
+using Database;
+using Domain.Core.Entities;
+using Domain.Core.Interfaces;
 
 namespace ConsoleSalaryCalculator
 {
-    internal class Program
+    public class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString;
-            const string sqlExpression = "SELECT * FROM Employees";
-            using (var connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                var query = new SQLiteCommand(sqlExpression, connection);
-                SQLiteDataReader reader = query.ExecuteReader();
-                while (reader.Read())
-                {
-                    Console.WriteLine(reader.GetValue(0));
-                    Console.WriteLine(reader.GetValue(1));
-                    Console.WriteLine(reader.GetValue(2));
-                    Console.WriteLine(reader.GetValue(3));
-                    Console.WriteLine();
-                }
-            }
-
-            Console.Read();
+            
         }
     }
 }
