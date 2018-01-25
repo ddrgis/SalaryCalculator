@@ -1,9 +1,14 @@
-﻿using Domain.Core.Interfaces;
+﻿using System.Collections.Generic;
+using Domain.Core.Interfaces;
 
 namespace Database
 {
     public interface IEmployeeRepository
     {
-        IEmployee FindById(int id);
+        List<IEmployee> List();
+        IEmployee GetById(int id);
+        void Add(IEmployee entity);
+        void Delete(IEmployee entity);
+        void Edit(IEmployee entity);
     }
 }

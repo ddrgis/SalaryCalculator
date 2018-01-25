@@ -14,7 +14,15 @@ namespace ConsoleSalaryCalculator
     {
         public static void Main(string[] args)
         {
-            
+            IEmployeeRepository repo = new EmployeeRepository();
+            var employees = repo.List();
+
+            foreach (IEmployee employee in employees)
+            {
+                Console.WriteLine($"{employee.GetType()} {employee.BaseSalary} {employee.DateOfEmployment}");
+            }
+
+            Console.ReadKey();
         }
     }
 }
