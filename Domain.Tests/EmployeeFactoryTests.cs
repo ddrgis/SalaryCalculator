@@ -20,26 +20,25 @@ namespace Domain.Tests
         }
 
         [Test]
-        public void CreateEmployee_WithoutConstructorArguments_ReturnNull()
-        {
-            IEmployee employee = EmployeeFactory.CreateEmployee("Manager");
-
-            Assert.IsNull(employee);
-        }
-
-        [Test]
         public void CreateEmployee_InputEmployeeType_ReturnEmployeeInstance()
         {
-            IEmployee employee = EmployeeFactory.CreateEmployee("Employee", 2000, SystemTime.Now, null, null);
-            Debug.WriteLine(employee, "Tests");
+            IEmployee employee = EmployeeFactory.CreateEmployee("Employee", 2000, SystemTime.Now);
 
             Assert.IsInstanceOf<Employee>(employee);
         }
 
         [Test]
+        public void CreateEmployee_InputEmployeeType_ReturnEmployeeWithRightDefaultValue()
+        {
+            IEmployee employee = EmployeeFactory.CreateEmployee("Employee", 2000, SystemTime.Now);
+
+            Assert.AreEqual(3, employee.PercentageIncrementForYear);
+        }
+
+        [Test]
         public void CreateEmployee_InputManagerType_ReturnManagerInstance()
         {
-            IEmployee employee = EmployeeFactory.CreateEmployee("Manager", 3000, SystemTime.Now, 3, 50, 1, null);
+            IEmployee employee = EmployeeFactory.CreateEmployee("Manager", 3000, SystemTime.Now);
 
             Assert.IsTrue(employee is Manager);
         }
@@ -47,7 +46,7 @@ namespace Domain.Tests
         [Test]
         public void CreateEmployee_InputSalesmanType_ReturnSalesmanInstance()
         {
-            IEmployee employee = EmployeeFactory.CreateEmployee("Salesman", 4000, SystemTime.Now, 2, 40, 2, null);
+            IEmployee employee = EmployeeFactory.CreateEmployee("Salesman", 4000, SystemTime.Now);
 
             Assert.IsInstanceOf(typeof(Salesman), employee);
         }
