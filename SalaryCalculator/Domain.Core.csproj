@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.Linq" />
   </ItemGroup>
 

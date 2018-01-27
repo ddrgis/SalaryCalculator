@@ -7,7 +7,7 @@ namespace Domain.Core.Factories
 {
     public static class EmployeeFactory
     {
-        public static IEmployee CreateEmployee(string employeeType, double baseSalary, DateTime dateOfEmployment, List<IEmployee> subordinates = null)
+        public static IEmployee Create(string employeeType, double baseSalary, DateTime dateOfEmployment, List<IEmployee> subordinates = null)
         {
             //todo: factory without switch-case
             //todo: add remaining (optionals) parameters
@@ -25,6 +25,12 @@ namespace Domain.Core.Factories
                 default:
                     return null;
             }
+        }
+
+        public static IEmployee Create(dynamic employee)
+        {
+            return Create(employee.Discriminator, employee.BaseSalary,
+                DateTime.Parse(employee.DateOfEmployment), employee.Subordinates);
         }
     }
 }

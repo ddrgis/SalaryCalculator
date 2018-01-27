@@ -36,7 +36,7 @@ namespace Infrastructure.Database
                 {
                     //todo: exception handling when employee type is wrong and possible exception from DateTime.Parse
                     string employeeType = reader.GetString(reader.GetOrdinal("Discriminator"));
-                    employees.Add(EmployeeFactory.CreateEmployee(employeeType,
+                    employees.Add(EmployeeFactory.Create(employeeType,
                         reader.GetDouble(reader.GetOrdinal("BaseSalary")), DateTime.Parse(reader.GetString(reader.GetOrdinal("DateOfEmployment")))));
                 }
             }
@@ -50,35 +50,7 @@ namespace Infrastructure.Database
 
             using (IDbConnection connection = CreateConnection())
             {
-                using (IDataReader reader = connection.ExecuteReader(sql, new {id}))
-                {
-                    IEmployee result = null;
-                    var employeeParser = reader.GetRowParser<Employee>();
-                    var managerParser = reader.GetRowParser<Manager>();
-                    var salesmanParser = reader.GetRowParser<Salesman>();
-                    while (reader.Read())
-                    {
-                        switch (reader.GetString(reader.GetOrdinal("Discriminator")))
-                        {
-                            case "Employee":
-                                result = employeeParser(reader);
-                                break;
-
-                            case "Manager":
-                                result = managerParser(reader);
-                                break;
-
-                            case "Salesman":
-                                result = salesmanParser(reader);
-                                break;
-
-                            default:
-                                throw new Exception();
-                        }
-                    }
-
-                    return result;
-                }
+                return EmployeeFactory.Create(connection.QueryFirstOrDefault(sql, new { id }));
             }
         }
 
