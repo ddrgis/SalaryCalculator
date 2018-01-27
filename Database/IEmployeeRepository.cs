@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domain.Core.Interfaces;
 
-namespace Database
+namespace Infrastructure.Database
 {
     public interface IEmployeeRepository
     {

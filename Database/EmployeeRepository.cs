@@ -1,26 +1,28 @@
-﻿using System;
-using Dapper;
+﻿using Dapper;
+using Domain.Core.Entities;
 using Domain.Core.Factories;
 using Domain.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
 
-namespace Database
+namespace Infrastructure.Database
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly IDbConnection _connectionString;
+        private readonly string _connectionStringName;
 
-        public EmployeeRepository()
+        //todo: вынести создание строк подлючений
+        public IDbConnection CreateConnection()
         {
-            _connectionString = new SQLiteConnection(ConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+            return new SQLiteConnection(ConfigurationManager.ConnectionStrings[_connectionStringName].ConnectionString);
         }
 
-        public EmployeeRepository(IDbConnection connectionString)
+        public EmployeeRepository(string connectionStringName = "EmployeeDB")
         {
-            _connectionString = connectionString;
+            _connectionStringName = connectionStringName;
         }
 
         public List<IEmployee> List()
@@ -28,13 +30,13 @@ namespace Database
             const string sql = "SELECT * FROM Employees";
 
             var employees = new List<IEmployee>();
-            using (IDataReader reader = _connectionString.ExecuteReader(sql))
+            using (IDataReader reader = CreateConnection().ExecuteReader(sql))
             {
                 while (reader.Read())
                 {
                     //todo: exception handling when employee type is wrong and possible exception from DateTime.Parse
                     string employeeType = reader.GetString(reader.GetOrdinal("Discriminator"));
-                    employees.Add(EmployeeFactory.CreateEmployee(employeeType, 
+                    employees.Add(EmployeeFactory.CreateEmployee(employeeType,
                         reader.GetDouble(reader.GetOrdinal("BaseSalary")), DateTime.Parse(reader.GetString(reader.GetOrdinal("DateOfEmployment")))));
                 }
             }
@@ -44,7 +46,40 @@ namespace Database
 
         public IEmployee GetById(int id)
         {
-            throw new NotImplementedException();
+            const string sql = "SELECT * FROM Employees WHERE Id = @Id";
+
+            using (IDbConnection connection = CreateConnection())
+            {
+                using (IDataReader reader = connection.ExecuteReader(sql, new {id}))
+                {
+                    IEmployee result = null;
+                    var employeeParser = reader.GetRowParser<Employee>();
+                    var managerParser = reader.GetRowParser<Manager>();
+                    var salesmanParser = reader.GetRowParser<Salesman>();
+                    while (reader.Read())
+                    {
+                        switch (reader.GetString(reader.GetOrdinal("Discriminator")))
+                        {
+                            case "Employee":
+                                result = employeeParser(reader);
+                                break;
+
+                            case "Manager":
+                                result = managerParser(reader);
+                                break;
+
+                            case "Salesman":
+                                result = salesmanParser(reader);
+                                break;
+
+                            default:
+                                throw new Exception();
+                        }
+                    }
+
+                    return result;
+                }
+            }
         }
 
         public void Add(IEmployee entity)
