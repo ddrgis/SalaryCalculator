@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Domain.Core;
+using Domain.Core.Interfaces;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using Domain.Core;
-using Domain.Core.Interfaces;
 
 namespace Domain.Tests.EntitiesTests
 {
@@ -19,16 +19,14 @@ namespace Domain.Tests.EntitiesTests
         public void CountSalary_OldSalesmanWithTreelikeSubordinates_ReturnIncrementedSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee salesman = TestUtils.CreateDefaultSalesman(lengthOfWork: 4);
-            salesman.Subordinates = new List<IEmployee> {
+            IEmployee salesman = TestUtils.CreateDefaultSalesman(lengthOfWork: 4, subordinates: new List<IEmployee> {
                 TestUtils.CreateDefaultEmployee(lengthOfWork: 5),
                 TestUtils.CreateDefaultEmployee(lengthOfWork: 40)
-            };
-            IEmployee subordinateManager = TestUtils.CreateDefaultManager(lengthOfWork: 2);
-            subordinateManager.Subordinates = new List<IEmployee> {
+            });
+            IEmployee subordinateManager = TestUtils.CreateDefaultManager(lengthOfWork: 2, subordinates: new List<IEmployee> {
                 TestUtils.CreateDefaultEmployee(lengthOfWork: 2),
                 TestUtils.CreateDefaultEmployee(lengthOfWork: 2)
-            };
+            });
             salesman.Subordinates.Add(subordinateManager);
             double subordinateManagerSalary = TestUtils.ManagerBaseSalary + (TestUtils.ManagerBaseSalary / 100 * TestUtils.ManagerIncrementForYear * 2) +
                                               (2 * (TestUtils.EmployeeBaseSalary + TestUtils.EmployeeBaseSalary / 100 * 2 * TestUtils.EmployeeIncrementForYear) * TestUtils.ManagerIncrementFromSubordinates / 100);

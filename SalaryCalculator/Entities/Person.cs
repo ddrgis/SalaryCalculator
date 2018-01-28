@@ -8,16 +8,16 @@ namespace Domain.Core.Entities
     //todo: переделать конструкторы и закрыть доступ к сеттерам
     public abstract class Person : IEmployee
     {
-        public int Id { get; set; }
-        public int? SuperiorId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public double BaseSalary { get; set; }
+        public int Id { get; }
+        public int? SuperiorId { get; }
+        public string FirstName { get; }
+        public string LastName { get; }
+        public double BaseSalary { get; }
         public DateTime DateOfEmployment { set; get; }
-        public double PercentageIncrementForYear { get; set; }
-        public double MaxPercentageIncrementForYear { get; set; }
-        public double PercentageIncrementFromSubordinates { get; set; }
-        public List<IEmployee> Subordinates { get; set; }
+        public double PercentageIncrementForYear { get; }
+        public double MaxPercentageIncrementForYear { get; }
+        public double PercentageIncrementFromSubordinates { get; }
+        public List<IEmployee> Subordinates { get; }
 
         [Obsolete("Constructor for ORM")]
         protected Person()
@@ -25,15 +25,18 @@ namespace Domain.Core.Entities
             
         }
 
-        protected Person(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear,
-            double maxPercentageIncrementForYear, double percentagesIncrementFromSubordinates = 0, List<IEmployee> subordinates = null)
+        protected Person(string firstName, string lastName, double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear,
+            double maxPercentageIncrementForYear, double percentagesIncrementFromSubordinates = 0, List<IEmployee> subordinates = null, int? superiorId = null)
         {
+            FirstName = firstName;
+            LastName = lastName;
             BaseSalary = baseSalary;
             DateOfEmployment = dateOfEmployment;
             PercentageIncrementForYear = percentageIncrementForYear;
             MaxPercentageIncrementForYear = maxPercentageIncrementForYear;
             PercentageIncrementFromSubordinates = percentagesIncrementFromSubordinates;
             Subordinates = subordinates;
+            SuperiorId = superiorId;
         }
 
         public abstract double CountSalary(DateTime? payDate);

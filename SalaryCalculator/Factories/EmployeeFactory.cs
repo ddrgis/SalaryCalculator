@@ -9,20 +9,21 @@ namespace Domain.Core.Factories
 {
     public static class EmployeeFactory
     {
-        public static IEmployee Create(string employeeType, double baseSalary, DateTime dateOfEmployment, List<IEmployee> subordinates = null)
+        public static IEmployee Create(string employeeType, string firstName, string lastName, double baseSalary, 
+            DateTime dateOfEmployment, List<IEmployee> subordinates = null, int? superiorId = null)
         {
             //todo: factory without switch-case
             //todo: add remaining (optionals) parameters
             switch (employeeType)
             {
                 case "Employee":
-                    return new Employee(baseSalary, dateOfEmployment);
+                    return new Employee(firstName, lastName, baseSalary, dateOfEmployment, superiorId: superiorId);
 
                 case "Manager":
-                    return new Manager(baseSalary, dateOfEmployment, subordinates: subordinates);
+                    return new Manager(firstName, lastName, baseSalary, dateOfEmployment, subordinates: subordinates, superiorId: superiorId);
 
                 case "Salesman":
-                    return new Salesman(baseSalary, dateOfEmployment, subordinates: subordinates);
+                    return new Salesman(firstName, lastName, baseSalary, dateOfEmployment, subordinates: subordinates, superiorId: superiorId);
 
                 default:
                     return null;

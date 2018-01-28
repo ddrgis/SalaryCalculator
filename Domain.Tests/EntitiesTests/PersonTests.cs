@@ -66,17 +66,11 @@ namespace Domain.Tests.EntitiesTests
         [Test]
         public void ToString_ByDefault_ReturnsFullInfo()
         {
-            var stubEmployee = new Employee(2000, new DateTime(2000, 11, 10), 3, 30)
-            {
-                Id = 55,
-                SuperiorId = null,
-                FirstName = "Nikita",
-                LastName = "Sementcov"
-            };
+            var stubEmployee = new Employee("Nikita", "Sementcov", 2000, new DateTime(2000, 11, 10), 3, 30);
 
             string actual = stubEmployee.ToString();
 
-            Assert.AreEqual("Employee: Nikita Sementcov, Id = 55, SuperiorId = null, BaseSalary - 2000, DateOfEmployement - 10.11.2000," +
+            Assert.AreEqual("Employee: Nikita Sementcov, Id = 0, SuperiorId = null, BaseSalary - 2000, DateOfEmployement - 10.11.2000," +
                             " Percentage Increment For Year - 3, Max Percentage Increment For Years - 30," +
                             " Percentage Increment From Subordinates - 0", actual);
         }

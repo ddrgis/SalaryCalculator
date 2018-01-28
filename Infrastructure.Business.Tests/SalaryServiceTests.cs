@@ -27,7 +27,7 @@ namespace Infrastructure.Business.Tests
             SystemTime.Set(new DateTime(2000, 01, 01));
             var stubEmployee = new List<IEmployee>()
             {
-                new Employee(2000, SystemTime.Now)
+                new Employee("Nikita", "Sementcov", 2000, SystemTime.Now)
             };
             var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
             fakeEmployeeRepository.List().Returns(stubEmployee);
