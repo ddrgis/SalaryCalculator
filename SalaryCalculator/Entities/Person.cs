@@ -7,16 +7,16 @@ namespace Domain.Core.Entities
 {
     public abstract class Person : IEmployee
     {
-        public int Id { get; }
-        public int? SuperiorId { get; }
-        public string FirstName { get; }
-        public string LastName { get; }
-        public double BaseSalary { get; }
-        public DateTime DateOfEmployment { get; }
-        public double PercentageIncrementForYear { get; }
-        public double MaxPercentageIncrementForYear { get; }
-        public double PercentageIncrementFromSubordinates { get; }
-        public List<IEmployee> Subordinates { get; }
+        public int Id { get; set; }
+        public int? SuperiorId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public double BaseSalary { get; set; }
+        public DateTime DateOfEmployment { get; set; }
+        public double PercentageIncrementForYear { get; set; }
+        public double MaxPercentageIncrementForYear { get; set; }
+        public double PercentageIncrementFromSubordinates { get; set; }
+        public List<IEmployee> Subordinates { get; set; }
 
         [Obsolete("Constructor for ORM")]
         protected Person()
