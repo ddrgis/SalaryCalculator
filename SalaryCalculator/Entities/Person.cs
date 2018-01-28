@@ -5,7 +5,6 @@ using Domain.Core.Interfaces;
 
 namespace Domain.Core.Entities
 {
-    //todo: переделать конструкторы и закрыть доступ к сеттерам
     public abstract class Person : IEmployee
     {
         public int Id { get; }
@@ -13,7 +12,7 @@ namespace Domain.Core.Entities
         public string FirstName { get; }
         public string LastName { get; }
         public double BaseSalary { get; }
-        public DateTime DateOfEmployment { set; get; }
+        public DateTime DateOfEmployment { get; }
         public double PercentageIncrementForYear { get; }
         public double MaxPercentageIncrementForYear { get; }
         public double PercentageIncrementFromSubordinates { get; }
