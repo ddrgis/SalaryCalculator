@@ -1,7 +1,10 @@
 ﻿using NUnit.Framework;
 using System;
 using Domain.Core;
+using Domain.Core.Entities;
+using Domain.Core.Factories;
 using Domain.Core.Interfaces;
+using NSubstitute;
 
 namespace Domain.Tests.EntitiesTests
 {
@@ -58,6 +61,18 @@ namespace Domain.Tests.EntitiesTests
             double actualSalary = employee.CountSalary(SystemTime.Now);
 
             Assert.AreEqual(expectedSalary, actualSalary);
+        }
+
+        [Test]
+        public void ToString_ByDefault_ReturnsFullInfo()
+        {
+            var stubEmployee = new Employee("Nikita", "Sementcov", 2000, new DateTime(2000, 11, 10), 3, 30);
+
+            string actual = stubEmployee.ToString();
+
+            Assert.AreEqual("Employee: Nikita Sementcov, Id = 0, SuperiorId = null, BaseSalary - 2000, DateOfEmployement - 10.11.2000," +
+                            " Percentage Increment For Year - 3, Max Percentage Increment For Years - 30," +
+                            " Percentage Increment From Subordinates - 0", actual);
         }
     }
 }

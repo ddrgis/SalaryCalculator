@@ -1,4 +1,5 @@
-﻿using Domain.Core;
+﻿using System.Collections.Generic;
+using Domain.Core;
 using Domain.Core.Entities;
 using Domain.Core.Interfaces;
 
@@ -20,19 +21,19 @@ namespace Domain.Tests.EntitiesTests
         internal static double SalesmanIncrementForMaxYears = 35;
         internal static double SalesmanIncrementFromSubordinates = 0.3;
 
-        internal static IEmployee CreateDefaultEmployee(int lengthOfWork = 0)
+        internal static IEmployee CreateDefaultEmployee(int lengthOfWork = 0, List<IEmployee> subordinates = null)
         {
-            return new Employee(baseSalary: EmployeeBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
+            return new Employee("Nikita", "Sementcov", baseSalary: EmployeeBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
         }
 
-        internal static IEmployee CreateDefaultManager(int lengthOfWork = 0)
+        internal static IEmployee CreateDefaultManager(int lengthOfWork = 0, List<IEmployee> subordinates = null)
         {
-            return new Manager(baseSalary: ManagerBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
+            return new Manager("Nikita", "Sementcov", baseSalary: ManagerBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork), subordinates: subordinates);
         }
 
-        internal static IEmployee CreateDefaultSalesman(int lengthOfWork = 0)
+        internal static IEmployee CreateDefaultSalesman(int lengthOfWork = 0, List<IEmployee> subordinates = null)
         {
-            return new Salesman(baseSalary: SalesmanBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork));
+            return new Salesman("Nikita", "Sementcov", baseSalary: SalesmanBaseSalary, dateOfEmployment: SystemTime.Now.AddYears(-lengthOfWork), subordinates: subordinates);
         }
     }
 }

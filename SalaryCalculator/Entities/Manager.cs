@@ -1,14 +1,20 @@
-﻿using System;
+﻿using Domain.Core.Interfaces;
+using System;
 using System.Collections.Generic;
-using Domain.Core.Interfaces;
 
 namespace Domain.Core.Entities
 {
     public class Manager : Person
     {
-        public Manager(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 5, double maxPercentageIncrementForYear = 40,
-                      double percentagesIncrementFromSubordinates = 0.5, List<IEmployee> subordinates = null)
-           : base(baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear, percentagesIncrementFromSubordinates, subordinates)
+        [Obsolete("Constructor for ORM")]
+        public Manager()
+        {
+        }
+
+        public Manager(string firstName, string lastName, double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 5, double maxPercentageIncrementForYear = 40,
+                      double percentagesIncrementFromSubordinates = 0.5, List<IEmployee> subordinates = null, int? superiorId = null)
+           : base(firstName, lastName, baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear,
+               percentagesIncrementFromSubordinates, subordinates, superiorId)
         {
         }
 

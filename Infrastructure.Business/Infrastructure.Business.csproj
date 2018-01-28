@@ -53,7 +53,7 @@
       <Name>Domain.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SalaryCalculator\Domain.Core.csproj">
-      <Project>{7216ddf0-f9e5-4be7-a2d9-3e1658900fc1}</Project>
+      <Project>{7216DDF0-F9E5-4BE7-A2D9-3E1658900FC1}</Project>
       <Name>Domain.Core</Name>
     </ProjectReference>
   </ItemGroup>

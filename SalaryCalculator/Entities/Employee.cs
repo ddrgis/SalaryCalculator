@@ -4,9 +4,15 @@ namespace Domain.Core.Entities
 {
     public class Employee : Person
     {
-        public Employee(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 3,
-            double maxPercentageIncrementForYear = 30)
-            : base(baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear)
+        [Obsolete("Constructor for ORM")]
+        public Employee()
+        {
+
+        }
+
+        public Employee(string firstName, string lastName, double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 3,
+            double maxPercentageIncrementForYear = 30, int? superiorId = null)
+            : base(firstName, lastName, baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear, superiorId: superiorId)
         {
         }
 

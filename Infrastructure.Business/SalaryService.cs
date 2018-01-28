@@ -8,22 +8,21 @@ namespace Infrastructure.Business
 {
     public class SalaryService : ISalaryService
     {
-        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEmployeeRepository _repository;
 
-        public SalaryService(IEmployeeRepository repository = null)
+        public SalaryService(IEmployeeRepository repository)
         {
-            _employeeRepository = repository ?? new EmployeeRepository();
+            _repository = repository ?? new EmployeeRepository();
         }
 
-        public double GetTotalSalary(DateTime? date = null)
+        public double GetTotalSalary(DateTime? date)
         {
             if (date == null)
             {
                 date = SystemTime.Now;
             }
 
-            var employees = _employeeRepository.List();
-            return employees.Aggregate(0.0, ((d, employee) => employee.CountSalary(date)));
+            return _repository.List().Aggregate(0.0, (sum, employee) => sum + employee.CountSalary(date));
         }
     }
 }
