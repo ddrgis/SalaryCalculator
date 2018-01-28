@@ -33,7 +33,7 @@ namespace Infrastructure.Business.Tests
             fakeEmployeeRepository.List().Returns(stubEmployee);
             ISalaryService service = new SalaryService(fakeEmployeeRepository);
 
-            var total = service.GetTotalSalary(SystemTime.Now);
+            double total = service.GetTotalSalary(SystemTime.Now);
 
             Assert.AreEqual(2000, total);
         }
