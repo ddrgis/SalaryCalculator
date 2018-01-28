@@ -4,6 +4,6 @@ namespace Domain.Interfaces
 {
     public interface ISalaryService
     {
-        double GetTotalSalary(DateTime date);
+        double GetTotalSalary(DateTime? date);
     }
 }

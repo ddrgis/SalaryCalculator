@@ -44,9 +44,17 @@
     <Compile Include="SalaryService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Database\Infrastructure.Database.csproj">
+      <Project>{EA1EB769-EE58-45F2-8977-88756BBCB8DC}</Project>
+      <Name>Infrastructure.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain.Interfaces\Domain.Interfaces.csproj">
       <Project>{83C628D2-FB68-4644-93AB-FC177DD164B4}</Project>
       <Name>Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SalaryCalculator\Domain.Core.csproj">
+      <Project>{7216ddf0-f9e5-4be7-a2d9-3e1658900fc1}</Project>
+      <Name>Domain.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
