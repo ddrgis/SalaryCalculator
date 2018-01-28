@@ -12,20 +12,20 @@ namespace ConsoleSalaryCalculator
             IEmployeeRepository repo = new EmployeeRepository();
             var employees = repo.List();
 
+            Console.WriteLine("List of all persons:");
             foreach (IEmployee employee in employees)
             {
-                Console.WriteLine($"{employee.GetType()} {employee.BaseSalary} {employee.DateOfEmployment}");
+                Console.WriteLine(employee.ToString());
             }
 
             Console.WriteLine();
 
-            var emp2 = repo.GetById(2);
-            Console.WriteLine($"{emp2.GetType()} {emp2.BaseSalary} {emp2.DateOfEmployment}");
+            Console.WriteLine("GetById Test:");
+            IEmployee emp = repo.GetById(2);
+            Console.WriteLine(emp.ToString());
 
-            var emp3 = repo.GetById(3);
-            Console.WriteLine($"{emp3.GetType()} {emp3.BaseSalary} {emp3.DateOfEmployment}");
 
-            Console.ReadKey();
+            Console.ReadLine();
         }
     }
 }

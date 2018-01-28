@@ -51,6 +51,15 @@ namespace Domain.Core.Entities
             return Subordinates.Aggregate(0.0, (acc, emp) => acc + emp.CountSalary(upToDate)) / 100 * PercentageIncrementFromSubordinates;
         }
 
+        public override string ToString()
+        {
+            string superiorId = SuperiorId == null ? "null" : SuperiorId.ToString();
+            return $"{GetType().Name}: {FirstName} {LastName}, Id = {Id}, SuperiorId = {superiorId}, BaseSalary - {BaseSalary}, " +
+                   $"DateOfEmployement - {DateOfEmployment:dd.MM.yyyy}, Percentage Increment For Year - {PercentageIncrementForYear}, " +
+                   $"Max Percentage Increment For Years - {MaxPercentageIncrementForYear}," +
+                   $" Percentage Increment From Subordinates - {PercentageIncrementFromSubordinates}";
+        }
+
         private double GetIncrementForYears(DateTime? upToDate)
         {
             double lengthOfWork = GetLengthOfWork(upToDate);
