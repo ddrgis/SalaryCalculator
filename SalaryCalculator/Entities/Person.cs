@@ -19,12 +19,6 @@ namespace Domain.Core.Entities
         public double PercentageIncrementFromSubordinates { get; set; }
         public List<IEmployee> Subordinates { get; set; }
 
-        [Obsolete("Constructor for ORM")]
-        protected Person()
-        {
-
-        }
-
         protected Person(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear,
             double maxPercentageIncrementForYear, double percentagesIncrementFromSubordinates = 0, List<IEmployee> subordinates = null)
         {

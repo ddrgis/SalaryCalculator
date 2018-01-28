@@ -9,6 +9,12 @@ namespace Domain.Tests.EntitiesTests
     [TestFixture]
     public class SalesmanTests
     {
+        [TearDown]
+        public void ResetAfterEachTest()
+        {
+            SystemTime.Reset();
+        }
+
         [Test]
         public void CountSalary_OldSalesmanWithTreelikeSubordinates_ReturnIncrementedSalary()
         {

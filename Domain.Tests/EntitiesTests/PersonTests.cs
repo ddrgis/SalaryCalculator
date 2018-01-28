@@ -8,6 +8,12 @@ namespace Domain.Tests.EntitiesTests
     [TestFixture]
     public class PersonTests
     {
+        [TearDown]
+        public void ResetAfterEachTest()
+        {
+            SystemTime.Reset();
+        }
+
         [Test]
         public void CountSalary_NewEmployee_ReturnBaseSalary()
         {
@@ -52,12 +58,6 @@ namespace Domain.Tests.EntitiesTests
             double actualSalary = employee.CountSalary(SystemTime.Now);
 
             Assert.AreEqual(expectedSalary, actualSalary);
-        }
-
-        [TearDown]
-        public void ResetAfterEachTest()
-        {
-            SystemTime.Reset();
         }
     }
 }
