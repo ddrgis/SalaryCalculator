@@ -30,6 +30,7 @@ namespace Domain.Core.Factories
             }
         }
 
+        //todo: refactor this
         public static IEmployee Create(IDataReader reader)
         {
             var employeeParser = reader.GetRowParser<Employee>();
