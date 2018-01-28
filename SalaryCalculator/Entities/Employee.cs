@@ -4,6 +4,12 @@ namespace Domain.Core.Entities
 {
     public class Employee : Person
     {
+        [Obsolete("Constructor for ORM")]
+        public Employee()
+        {
+
+        }
+
         public Employee(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 3,
             double maxPercentageIncrementForYear = 30)
             : base(baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear)

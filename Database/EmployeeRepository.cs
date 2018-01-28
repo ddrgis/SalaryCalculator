@@ -1,12 +1,12 @@
 ﻿using Dapper;
 using Domain.Core.Factories;
 using Domain.Core.Interfaces;
+using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
-using Domain.Interfaces;
 
 namespace Infrastructure.Database
 {
@@ -34,10 +34,8 @@ namespace Infrastructure.Database
             {
                 while (reader.Read())
                 {
-                    //todo: exception handling when employee type is wrong and possible exception from DateTime.Parse
-                    string employeeType = reader.GetString(reader.GetOrdinal("Discriminator"));
-                    employees.Add(EmployeeFactory.Create(employeeType,
-                        reader.GetDouble(reader.GetOrdinal("BaseSalary")), DateTime.Parse(reader.GetString(reader.GetOrdinal("DateOfEmployment")))));
+                    IEmployee employee = EmployeeFactory.Create(reader);
+                    employees.Add(employee);
                 }
             }
 
@@ -47,10 +45,17 @@ namespace Infrastructure.Database
         public IEmployee GetById(int id)
         {
             const string sql = "SELECT * FROM Employees WHERE Id = @Id";
-
-            using (IDbConnection connection = CreateConnection())
+            try
             {
-                return EmployeeFactory.Create(connection.QueryFirstOrDefault(sql, new { id }));
+                using (IDataReader reader = CreateConnection().ExecuteReader(sql, new { id }))
+                {
+                    reader.Read();
+                    return EmployeeFactory.Create(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Can not read employee with Id = {id}", ex);
             }
         }
 

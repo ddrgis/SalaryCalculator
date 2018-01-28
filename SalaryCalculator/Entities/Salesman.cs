@@ -7,6 +7,13 @@ namespace Domain.Core.Entities
 {
     public class Salesman : Person
     {
+        [Obsolete("Constructor for ORM")]
+        public Salesman()
+        {
+
+        }
+
+
         public Salesman(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 1,
             double maxPercentageIncrementForYear = 35, double percentagesIncrementFromSubordinates = 0.3, List<IEmployee> subordinates = null)
             : base(baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear, percentagesIncrementFromSubordinates, subordinates)

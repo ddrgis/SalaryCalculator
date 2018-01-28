@@ -1,7 +1,9 @@
-﻿using Domain.Core.Entities;
+﻿using Dapper;
+using Domain.Core.Entities;
+using Domain.Core.Interfaces;
 using System;
 using System.Collections.Generic;
-using Domain.Core.Interfaces;
+using System.Data;
 
 namespace Domain.Core.Factories
 {
@@ -27,10 +29,34 @@ namespace Domain.Core.Factories
             }
         }
 
-        public static IEmployee Create(dynamic employee)
+        public static IEmployee Create(IDataReader reader)
         {
-            return Create(employee.Discriminator, employee.BaseSalary,
-                DateTime.Parse(employee.DateOfEmployment), employee.Subordinates);
+            var employeeParser = reader.GetRowParser<Employee>();
+            var managerParser = reader.GetRowParser<Manager>();
+            var salesmanParser = reader.GetRowParser<Salesman>();
+
+            IEmployee employee;
+
+            string employeeType = reader.GetString(reader.GetOrdinal("Discriminator"));
+            switch (employeeType)
+            {
+                case "Employee":
+                    employee = employeeParser(reader);
+                    break;
+
+                case "Manager":
+                    employee = managerParser(reader);
+                    break;
+
+                case "Salesman":
+                    employee = salesmanParser(reader);
+                    break;
+
+                default:
+                    throw new Exception($"Can not create person with {employeeType} type");
+            }
+
+            return employee;
         }
     }
 }

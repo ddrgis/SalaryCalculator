@@ -6,6 +6,12 @@ namespace Domain.Core.Entities
 {
     public class Manager : Person
     {
+        [Obsolete("Constructor for ORM")]
+        public Manager()
+        {
+
+        }
+
         public Manager(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear = 5, double maxPercentageIncrementForYear = 40,
                       double percentagesIncrementFromSubordinates = 0.5, List<IEmployee> subordinates = null)
            : base(baseSalary, dateOfEmployment, percentageIncrementForYear, maxPercentageIncrementForYear, percentagesIncrementFromSubordinates, subordinates)

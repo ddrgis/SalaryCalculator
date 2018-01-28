@@ -5,6 +5,7 @@ using Domain.Core.Interfaces;
 
 namespace Domain.Core.Entities
 {
+    //todo: переделать конструкторы и закрыть доступ к сеттерам
     public abstract class Person : IEmployee
     {
         public int Id { get; set; }
@@ -17,6 +18,12 @@ namespace Domain.Core.Entities
         public double MaxPercentageIncrementForYear { get; set; }
         public double PercentageIncrementFromSubordinates { get; set; }
         public List<IEmployee> Subordinates { get; set; }
+
+        [Obsolete("Constructor for ORM")]
+        protected Person()
+        {
+            
+        }
 
         protected Person(double baseSalary, DateTime dateOfEmployment, double percentageIncrementForYear,
             double maxPercentageIncrementForYear, double percentagesIncrementFromSubordinates = 0, List<IEmployee> subordinates = null)
