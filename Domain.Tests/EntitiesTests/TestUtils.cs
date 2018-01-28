@@ -1,6 +1,6 @@
-﻿using Domain.Core.Entities;
+﻿using Domain.Core;
+using Domain.Core.Entities;
 using Domain.Core.Interfaces;
-using Domain.Core.Services;
 
 namespace Domain.Tests.EntitiesTests
 {

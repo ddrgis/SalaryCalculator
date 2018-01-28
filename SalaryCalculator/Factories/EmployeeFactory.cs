@@ -1,7 +1,7 @@
 ﻿using Domain.Core.Entities;
-using Domain.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using Domain.Core.Interfaces;
 
 namespace Domain.Core.Factories
 {

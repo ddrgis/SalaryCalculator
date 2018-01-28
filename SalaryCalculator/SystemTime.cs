@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.Core.Services
+namespace Domain.Core
 {
     /// <summary>
     /// Обертка над DateTime с возможностью подмены текущего времени в целях тестирования

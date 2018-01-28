@@ -1,10 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using Domain.Core.Entities;
+﻿using Domain.Core.Entities;
 using Domain.Core.Factories;
-using Domain.Core.Interfaces;
-using Domain.Core.Services;
 using NUnit.Framework;
+using System;
+using Domain.Core;
+using Domain.Core.Interfaces;
 
 namespace Domain.Tests
 {
@@ -14,7 +13,7 @@ namespace Domain.Tests
         [Test]
         public void CreateEmployee_WithWrongType_ReturnNull()
         {
-            IEmployee employee = EmployeeFactory.Create("WrongType", 2000, new DateTime(2000, 1,1 ));
+            IEmployee employee = EmployeeFactory.Create("WrongType", 2000, new DateTime(2000, 1, 1));
 
             Assert.IsNull(employee);
         }

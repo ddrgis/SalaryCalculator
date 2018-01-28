@@ -74,9 +74,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj">
+    <ProjectReference Include="..\Database\Infrastructure.Database.csproj">
       <Project>{ea1eb769-ee58-45f2-8977-88756bbcb8dc}</Project>
-      <Name>Database</Name>
+      <Name>Infrastructure.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain.Interfaces\Domain.Interfaces.csproj">
+      <Project>{83C628D2-FB68-4644-93AB-FC177DD164B4}</Project>
+      <Name>Domain.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SalaryCalculator\Domain.Core.csproj">
       <Project>{7216ddf0-f9e5-4be7-a2d9-3e1658900fc1}</Project>

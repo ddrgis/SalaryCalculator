@@ -1,7 +1,6 @@
-﻿using Domain.Core.Interfaces;
-using Domain.Core.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Domain.Core.Interfaces;
 
 namespace Domain.Core.Entities
 {

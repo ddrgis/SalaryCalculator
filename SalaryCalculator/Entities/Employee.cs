@@ -1,5 +1,4 @@
-﻿using Domain.Core.Services;
-using System;
+﻿using System;
 
 namespace Domain.Core.Entities
 {

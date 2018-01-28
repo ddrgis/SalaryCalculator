@@ -1,8 +1,8 @@
-﻿using Domain.Core.Interfaces;
-using Domain.Core.Services;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Domain.Core;
+using Domain.Core.Interfaces;
 
 namespace Domain.Tests.EntitiesTests
 {

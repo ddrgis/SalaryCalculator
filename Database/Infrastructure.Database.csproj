@@ -59,11 +59,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEmployeeRepository.cs" />
     <Compile Include="EmployeeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Domain.Interfaces\Domain.Interfaces.csproj">
+      <Project>{83C628D2-FB68-4644-93AB-FC177DD164B4}</Project>
+      <Name>Domain.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SalaryCalculator\Domain.Core.csproj">
       <Project>{7216ddf0-f9e5-4be7-a2d9-3e1658900fc1}</Project>
       <Name>Domain.Core</Name>

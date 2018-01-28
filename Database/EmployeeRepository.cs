@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Domain.Core.Entities;
 using Domain.Core.Factories;
 using Domain.Core.Interfaces;
 using System;
@@ -7,6 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
+using Domain.Interfaces;
 
 namespace Infrastructure.Database
 {
