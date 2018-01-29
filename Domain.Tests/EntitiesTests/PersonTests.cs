@@ -1,10 +1,9 @@
-﻿using NUnit.Framework;
-using System;
-using Domain.Core;
+﻿using Domain.Core;
 using Domain.Core.Entities;
-using Domain.Core.Factories;
 using Domain.Core.Interfaces;
-using NSubstitute;
+using NUnit.Framework;
+using System;
+using static TestUtils.Utils;
 
 namespace Domain.Tests.EntitiesTests
 {
@@ -21,30 +20,30 @@ namespace Domain.Tests.EntitiesTests
         public void CountSalary_NewEmployee_ReturnBaseSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee employee = TestUtils.CreateDefaultEmployee();
+            IEmployee employee = CreateDefaultEmployee();
 
             double salary = employee.CountSalary(SystemTime.Now);
 
-            Assert.AreEqual(TestUtils.EmployeeBaseSalary, salary);
+            Assert.AreEqual(EmployeeBaseSalary, salary);
         }
 
         [Test]
         public void CountSalary_WithoutPayDateInput_ReturnBaseSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee employee = TestUtils.CreateDefaultEmployee();
+            IEmployee employee = CreateDefaultEmployee();
 
             double salary = employee.CountSalary();
 
-            Assert.AreEqual(TestUtils.EmployeeBaseSalary, salary);
+            Assert.AreEqual(EmployeeBaseSalary, salary);
         }
 
         [Test]
         public void CountSalary_OneYearEmployee_ReturnBaseSalaryWithOneYearIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee employee = TestUtils.CreateDefaultEmployee(lengthOfWork: 1);
-            double expectedSalary = TestUtils.EmployeeBaseSalary + (TestUtils.EmployeeBaseSalary / 100 * TestUtils.EmployeeIncrementForYear * 1);
+            IEmployee employee = CreateDefaultEmployee(lengthOfWork: 1);
+            double expectedSalary = EmployeeBaseSalary + (EmployeeBaseSalary / 100 * EmployeeIncrementForYear * 1);
 
             double actualSalary = employee.CountSalary(SystemTime.Now);
 
@@ -55,8 +54,8 @@ namespace Domain.Tests.EntitiesTests
         public void CountSalary_FiftyYearEmployee_ReturnBaseSalaryWithMaxYearIncrement()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee employee = TestUtils.CreateDefaultEmployee(lengthOfWork: 50);
-            double expectedSalary = TestUtils.EmployeeBaseSalary + (TestUtils.EmployeeBaseSalary / 100 * TestUtils.EmployeeIncrementForMaxYears);
+            IEmployee employee = CreateDefaultEmployee(lengthOfWork: 50);
+            double expectedSalary = EmployeeBaseSalary + (EmployeeBaseSalary / 100 * EmployeeIncrementForMaxYears);
 
             double actualSalary = employee.CountSalary(SystemTime.Now);
 

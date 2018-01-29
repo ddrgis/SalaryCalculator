@@ -3,6 +3,7 @@ using Domain.Core.Interfaces;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using static TestUtils.Utils;
 
 namespace Domain.Tests.EntitiesTests
 {
@@ -19,45 +20,45 @@ namespace Domain.Tests.EntitiesTests
         public void CountSalary_NewManagerWithFewNewEmployeeSubordinates_ReturnIncrementedSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee manager = TestUtils.CreateDefaultManager(subordinates: new List<IEmployee> {
-                TestUtils.CreateDefaultEmployee(),
-                TestUtils.CreateDefaultEmployee()
+            IEmployee manager = CreateDefaultManager(subordinates: new List<IEmployee> {
+                CreateDefaultEmployee(),
+                CreateDefaultEmployee()
             });
 
             double salary = manager.CountSalary(SystemTime.Now);
 
-            Assert.AreEqual(TestUtils.ManagerBaseSalary + 2 * TestUtils.EmployeeBaseSalary * TestUtils.ManagerIncrementFromSubordinates / 100, salary);
+            Assert.AreEqual(ManagerBaseSalary + 2 * EmployeeBaseSalary * ManagerIncrementFromSubordinates / 100, salary);
         }
 
         [Test]
         public void CountSalary_WithoutPayDateInput_ReturnIncrementedSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee manager = TestUtils.CreateDefaultManager(subordinates: new List<IEmployee> {
-                TestUtils.CreateDefaultEmployee(),
-                TestUtils.CreateDefaultEmployee()
+            IEmployee manager = CreateDefaultManager(subordinates: new List<IEmployee> {
+                CreateDefaultEmployee(),
+                CreateDefaultEmployee()
             });
 
             double salary = manager.CountSalary();
 
-            Assert.AreEqual(TestUtils.ManagerBaseSalary + 2 * TestUtils.EmployeeBaseSalary * TestUtils.ManagerIncrementFromSubordinates / 100, salary);
+            Assert.AreEqual(ManagerBaseSalary + 2 * EmployeeBaseSalary * ManagerIncrementFromSubordinates / 100, salary);
         }
 
         [Test]
         public void CountSalary_NewManagerWithEmployeeSubordinates_ReturnIncrementedSalary()
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
-            IEmployee manager = TestUtils.CreateDefaultManager(subordinates: new List<IEmployee> {
-                TestUtils.CreateDefaultEmployee(lengthOfWork: 5),
-                TestUtils.CreateDefaultEmployee(lengthOfWork: 40)
+            IEmployee manager = CreateDefaultManager(subordinates: new List<IEmployee> {
+                CreateDefaultEmployee(lengthOfWork: 5),
+                CreateDefaultEmployee(lengthOfWork: 40)
             });
-            double subordinatesIncrementForYears = TestUtils.EmployeeBaseSalary / 100 * TestUtils.EmployeeIncrementForYear * 5 +
-                                                TestUtils.EmployeeBaseSalary / 100 * TestUtils.EmployeeIncrementForMaxYears;
+            double subordinatesIncrementForYears = EmployeeBaseSalary / 100 * EmployeeIncrementForYear * 5 +
+                                                EmployeeBaseSalary / 100 * EmployeeIncrementForMaxYears;
 
             double salary = manager.CountSalary(SystemTime.Now);
 
-            Assert.AreEqual(TestUtils.ManagerBaseSalary +
-                            (2 * TestUtils.EmployeeBaseSalary + subordinatesIncrementForYears) * TestUtils.ManagerIncrementFromSubordinates / 100, salary);
+            Assert.AreEqual(ManagerBaseSalary +
+                            (2 * EmployeeBaseSalary + subordinatesIncrementForYears) * ManagerIncrementFromSubordinates / 100, salary);
         }
 
         [Test]
@@ -65,27 +66,27 @@ namespace Domain.Tests.EntitiesTests
         {
             SystemTime.Set(new DateTime(2000, 1, 1));
             var managerSubordinates = new List<IEmployee> {
-                TestUtils.CreateDefaultEmployee(lengthOfWork: 5),
-                TestUtils.CreateDefaultEmployee(lengthOfWork: 40)
+                CreateDefaultEmployee(lengthOfWork: 5),
+                CreateDefaultEmployee(lengthOfWork: 40)
             };
-            IEmployee manager = TestUtils.CreateDefaultManager(lengthOfWork: 5, subordinates: managerSubordinates);
+            IEmployee manager = CreateDefaultManager(lengthOfWork: 5, subordinates: managerSubordinates);
 
             var subordinatesOfSubordinatemanager = new List<IEmployee> {
-                TestUtils.CreateDefaultEmployee(lengthOfWork: 2),
-                TestUtils.CreateDefaultEmployee(lengthOfWork: 2)
+                CreateDefaultEmployee(lengthOfWork: 2),
+                CreateDefaultEmployee(lengthOfWork: 2)
             };
-            IEmployee subordinateManager = TestUtils.CreateDefaultManager(lengthOfWork: 2, subordinates: subordinatesOfSubordinatemanager);
+            IEmployee subordinateManager = CreateDefaultManager(lengthOfWork: 2, subordinates: subordinatesOfSubordinatemanager);
             manager.Subordinates.Add(subordinateManager);
-            double subordinateManagerSalary = TestUtils.ManagerBaseSalary + TestUtils.ManagerBaseSalary / 100 * TestUtils.ManagerIncrementForYear * 2 +
-                (2 * (TestUtils.EmployeeBaseSalary + TestUtils.EmployeeBaseSalary / 100 * 2 * TestUtils.EmployeeIncrementForYear) * TestUtils.ManagerIncrementFromSubordinates / 100);
-            double subordinateEmployeesSalary = 2 * TestUtils.EmployeeBaseSalary +
-                                                TestUtils.EmployeeBaseSalary / 100 * 5 * TestUtils.EmployeeIncrementForYear +
-                                                TestUtils.EmployeeBaseSalary / 100 * TestUtils.EmployeeIncrementForMaxYears;
+            double subordinateManagerSalary = ManagerBaseSalary + ManagerBaseSalary / 100 * ManagerIncrementForYear * 2 +
+                (2 * (EmployeeBaseSalary + EmployeeBaseSalary / 100 * 2 * EmployeeIncrementForYear) * ManagerIncrementFromSubordinates / 100);
+            double subordinateEmployeesSalary = 2 * EmployeeBaseSalary +
+                                                EmployeeBaseSalary / 100 * 5 * EmployeeIncrementForYear +
+                                                EmployeeBaseSalary / 100 * EmployeeIncrementForMaxYears;
 
             //ACT:
             double salary = manager.CountSalary(SystemTime.Now);
 
-            Assert.AreEqual(TestUtils.ManagerBaseSalary + (TestUtils.ManagerBaseSalary / 100 * TestUtils.ManagerIncrementForYear * 5) +
+            Assert.AreEqual(ManagerBaseSalary + (ManagerBaseSalary / 100 * ManagerIncrementForYear * 5) +
                             ((subordinateEmployeesSalary + subordinateManagerSalary) * 0.5 / 100),
                 actual: salary,
                 delta: 1);

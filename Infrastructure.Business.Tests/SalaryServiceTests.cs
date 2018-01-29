@@ -1,11 +1,11 @@
 ﻿using Domain.Core;
-using Domain.Core.Entities;
 using Domain.Core.Interfaces;
 using Domain.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using static TestUtils.Utils;
 
 namespace Infrastructure.Business.Tests
 {
@@ -22,9 +22,9 @@ namespace Infrastructure.Business.Tests
         public void GetTotalSalary_ForOneEmployee_ReturnsHisSalary()
         {
             SystemTime.Set(new DateTime(2000, 01, 01));
-            var stubEmployee = new List<IEmployee>()
+            var stubEmployee = new List<IEmployee>
             {
-                new Employee("Nikita", "Sementcov", 2000, SystemTime.Now)
+                CreateDefaultEmployee()
             };
             var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
             fakeEmployeeRepository.List().Returns(stubEmployee);
@@ -32,7 +32,7 @@ namespace Infrastructure.Business.Tests
 
             double total = service.GetTotalSalary(SystemTime.Now);
 
-            Assert.AreEqual(2000, total);
+            Assert.AreEqual(1000, total);
         }
     }
 }
