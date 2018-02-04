@@ -44,7 +44,7 @@ namespace TestUtils
             return new List<IEmployee>()
             {
 #pragma warning disable 618
-                new Manager {Id = 1, SuperiorId = null, FirstName = "Alan", LastName = "Kay", BaseSalary = 8000, DateOfEmployment = new DateTime(1970,  10,  20), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0.6},
+                new Salesman {Id = 1, SuperiorId = null, FirstName = "Alan", LastName = "Kay", BaseSalary = 8000, DateOfEmployment = new DateTime(1970,  10,  20), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0.6},
                 new Employee {Id = 2, SuperiorId = 1, FirstName = "Grady", LastName = "Booch", BaseSalary = 3000, DateOfEmployment = new DateTime(1980,  10,  20), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
                 new Employee {Id = 3, SuperiorId = 1, FirstName = "Anders", LastName = "Hejlsberg", BaseSalary = 3000, DateOfEmployment = new DateTime(1990,  10,  20), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
                 new Employee {Id = 4, SuperiorId = 1, FirstName = "Jeffrey", LastName = "Richter", BaseSalary = 3000, DateOfEmployment = new DateTime(2000,  01,  01), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
@@ -68,23 +68,220 @@ namespace TestUtils
 #pragma warning restore 618
             };
         }
+
+        public static IEmployee CreateSmallTreeOfEmployees()
+        {
+#pragma warning disable 618
+            return new Salesman
+            {
+                Id = 7,
+                SuperiorId = 5,
+                FirstName = "Larry",
+                LastName = "Page",
+                BaseSalary = 7000,
+                DateOfEmployment = new DateTime(2000, 01, 01),
+                PercentageIncrementForYear = 3,
+                MaxPercentageIncrementForYear = 30,
+                PercentageIncrementFromSubordinates = 0.3,
+                Subordinates = new List<IEmployee>() { new Employee {Id = 8, SuperiorId = 7, FirstName = "Steve", LastName = "Wozniak", BaseSalary = 2000, DateOfEmployment = new DateTime(1990,  10,  16), PercentageIncrementForYear = 4, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
+                    new Employee {Id = 9, SuperiorId = 7, FirstName = "Bill", LastName = "Gates", BaseSalary = 2000, DateOfEmployment = new DateTime(1990,  10,  16), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0}}
+            };
+#pragma warning restore 618
+        }
+
+        public static IEmployee CreateMediTreeOfEmployees()
+        {
+#pragma warning disable 618
+            return new Manager
+            {
+                Id = 5,
+                SuperiorId = 1,
+                FirstName = "Tim",
+                LastName = "Berners-Lee",
+                BaseSalary = 4000,
+                DateOfEmployment = new DateTime(1995, 10, 20),
+                PercentageIncrementForYear = 5,
+                MaxPercentageIncrementForYear = 40,
+                PercentageIncrementFromSubordinates = 0.5,
+                Subordinates = new List<IEmployee>()
+                        {
+                            new Employee
+                            {
+                                Id = 6,
+                                SuperiorId = 5,
+                                FirstName = "Ada",
+                                LastName = "Lovelace",
+                                BaseSalary = 2000,
+                                DateOfEmployment = new DateTime(1975, 10, 10),
+                                PercentageIncrementForYear = 3,
+                                MaxPercentageIncrementForYear = 30,
+                                PercentageIncrementFromSubordinates = 0
+                            },
+                            new Salesman
+                            {
+                                Id = 7,
+                                SuperiorId = 5,
+                                FirstName = "Larry",
+                                LastName = "Page",
+                                BaseSalary = 7000,
+                                DateOfEmployment = new DateTime(2000, 01, 01),
+                                PercentageIncrementForYear = 3,
+                                MaxPercentageIncrementForYear = 30,
+                                PercentageIncrementFromSubordinates = 0.3,
+                                Subordinates = new List<IEmployee>()
+                                {
+                                    new Employee
+                                    {
+                                        Id = 8,
+                                        SuperiorId = 7,
+                                        FirstName = "Steve",
+                                        LastName = "Wozniak",
+                                        BaseSalary = 2000,
+                                        DateOfEmployment = new DateTime(1990, 10, 16),
+                                        PercentageIncrementForYear = 4,
+                                        MaxPercentageIncrementForYear = 30,
+                                        PercentageIncrementFromSubordinates = 0
+                                    },
+                                    new Employee
+                                    {
+                                        Id = 9,
+                                        SuperiorId = 7,
+                                        FirstName = "Bill",
+                                        LastName = "Gates",
+                                        BaseSalary = 2000,
+                                        DateOfEmployment = new DateTime(1990, 10, 16),
+                                        PercentageIncrementForYear = 3,
+                                        MaxPercentageIncrementForYear = 30,
+                                        PercentageIncrementFromSubordinates = 0
+                                    },
+                                }
+                            },
+                        }
+            };
+#pragma warning restore 618
+        }
+
+        public static IEmployee CreateFullTreeOfEmployees()
+        {
+#pragma warning disable 618
+            return new Salesman()
+            {
+                Id = 1,
+                SuperiorId = null,
+                FirstName = "Alan",
+                LastName = "Kay",
+                BaseSalary = 8000,
+                DateOfEmployment = new DateTime(1970, 10, 20),
+                PercentageIncrementForYear = 3,
+                MaxPercentageIncrementForYear = 30,
+                PercentageIncrementFromSubordinates = 0.6,
+                Subordinates = new List<IEmployee>()
+                {
+                    new Employee
+                    {
+                        Id = 2,
+                        SuperiorId = 1,
+                        FirstName = "Grady",
+                        LastName = "Booch",
+                        BaseSalary = 3000,
+                        DateOfEmployment = new DateTime(1980, 10, 20),
+                        PercentageIncrementForYear = 3,
+                        MaxPercentageIncrementForYear = 30,
+                        PercentageIncrementFromSubordinates = 0
+                    },
+                    new Employee
+                    {
+                        Id = 3,
+                        SuperiorId = 1,
+                        FirstName = "Anders",
+                        LastName = "Hejlsberg",
+                        BaseSalary = 3000,
+                        DateOfEmployment = new DateTime(1990, 10, 20),
+                        PercentageIncrementForYear = 3,
+                        MaxPercentageIncrementForYear = 30,
+                        PercentageIncrementFromSubordinates = 0
+                    },
+                    new Employee
+                    {
+                        Id = 4,
+                        SuperiorId = 1,
+                        FirstName = "Jeffrey",
+                        LastName = "Richter",
+                        BaseSalary = 3000,
+                        DateOfEmployment = new DateTime(2000, 01, 01),
+                        PercentageIncrementForYear = 3,
+                        MaxPercentageIncrementForYear = 30,
+                        PercentageIncrementFromSubordinates = 0
+                    },
+                    new Manager
+                    {
+                        Id = 5,
+                        SuperiorId = 1,
+                        FirstName = "Tim",
+                        LastName = "Berners-Lee",
+                        BaseSalary = 4000,
+                        DateOfEmployment = new DateTime(1995, 10, 20),
+                        PercentageIncrementForYear = 5,
+                        MaxPercentageIncrementForYear = 40,
+                        PercentageIncrementFromSubordinates = 0.5,
+                        Subordinates = new List<IEmployee>()
+                        {
+                            new Employee
+                            {
+                                Id = 6,
+                                SuperiorId = 5,
+                                FirstName = "Ada",
+                                LastName = "Lovelace",
+                                BaseSalary = 2000,
+                                DateOfEmployment = new DateTime(1975, 10, 10),
+                                PercentageIncrementForYear = 3,
+                                MaxPercentageIncrementForYear = 30,
+                                PercentageIncrementFromSubordinates = 0
+                            },
+                            new Salesman
+                            {
+                                Id = 7,
+                                SuperiorId = 5,
+                                FirstName = "Larry",
+                                LastName = "Page",
+                                BaseSalary = 7000,
+                                DateOfEmployment = new DateTime(2000, 01, 01),
+                                PercentageIncrementForYear = 3,
+                                MaxPercentageIncrementForYear = 30,
+                                PercentageIncrementFromSubordinates = 0.3,
+                                Subordinates = new List<IEmployee>()
+                                {
+                                    new Employee
+                                    {
+                                        Id = 8,
+                                        SuperiorId = 7,
+                                        FirstName = "Steve",
+                                        LastName = "Wozniak",
+                                        BaseSalary = 2000,
+                                        DateOfEmployment = new DateTime(1990, 10, 16),
+                                        PercentageIncrementForYear = 4,
+                                        MaxPercentageIncrementForYear = 30,
+                                        PercentageIncrementFromSubordinates = 0
+                                    },
+                                    new Employee
+                                    {
+                                        Id = 9,
+                                        SuperiorId = 7,
+                                        FirstName = "Bill",
+                                        LastName = "Gates",
+                                        BaseSalary = 2000,
+                                        DateOfEmployment = new DateTime(1990, 10, 16),
+                                        PercentageIncrementForYear = 3,
+                                        MaxPercentageIncrementForYear = 30,
+                                        PercentageIncrementFromSubordinates = 0
+                                    },
+                                }
+                            },
+                        }
+                    },
+                }
+            };
+#pragma warning restore 618
+        }
     }
 }
-
-// new Manager {Id = 1, SuperiorId = null, FirstName = "Alan", LastName = "Kay", BaseSalary = 8000,
-//                    DateOfEmployment = new DateTime(1970,  10,  20), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30,
-//                    PercentageIncrementFromSubordinates = 0.6, Subordinates = new List<IEmployee>()
-//                {
-//                    new Employee {Id = 2, SuperiorId = 1, FirstName = "Grady", LastName = "Booch", BaseSalary = 3000, DateOfEmployment = new DateTime(1980,  10,  20), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
-//                    new Employee {Id = 3, SuperiorId = 1, FirstName = "Anders", LastName = "Hejlsberg", BaseSalary = 3000, DateOfEmployment = new DateTime(1990,  10,  20), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
-//                    new Employee {Id = 4, SuperiorId = 1, FirstName = "Jeffrey", LastName = "Richter", BaseSalary = 3000, DateOfEmployment = new DateTime(2000,  10,  20), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
-//                    new Manager {Id = 5, SuperiorId = 1, FirstName = "Tim", LastName = "Berners-Lee", BaseSalary = 4000, DateOfEmployment = new DateTime(1995,  10,  20), PercentageIncrementForYear = 5, MaxPercentageIncrementForYear = 40, PercentageIncrementFromSubordinates = 0.5, Subordinates = new List<IEmployee>()
-//                    {
-//                        new Employee {Id = 6, SuperiorId = 5, FirstName = "Ada", LastName = "Lovelace", BaseSalary = 2000, DateOfEmployment = new DateTime(1975,  10,  10), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
-//                        new Salesman {Id = 7, SuperiorId = 5, FirstName = "Larry", LastName = "Page", BaseSalary = 7000, DateOfEmployment = new DateTime(2000,  10,  10), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0.3, Subordinates = new List<IEmployee>()
-//                        {
-//                            new Employee {Id = 8, SuperiorId = 7, FirstName = "Steve", LastName = "Wozniak", BaseSalary = 2000, DateOfEmployment = new DateTime(1990,  10,  16), PercentageIncrementForYear = 4, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
-//                            new Employee {Id = 9, SuperiorId = 7, FirstName = "Bill", LastName = "Gates", BaseSalary = 2000, DateOfEmployment = new DateTime(1990,  10,  16), PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30, PercentageIncrementFromSubordinates = 0},
-//                        }},
-//                    }},
-//                }},

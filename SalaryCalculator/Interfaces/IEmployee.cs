@@ -5,6 +5,8 @@ namespace Domain.Core.Interfaces
 {
     public interface IEmployee
     {
+        int Id { get; set; }
+        int? SuperiorId { get; set; }
         double BaseSalary { get; set; }
         DateTime DateOfEmployment { get; set; }
         double PercentageIncrementForYear { get; set; }

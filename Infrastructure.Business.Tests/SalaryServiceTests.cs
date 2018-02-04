@@ -22,13 +22,10 @@ namespace Infrastructure.Business.Tests
         public void GetTotalSalary_ForOneEmployee_ReturnsHisSalary()
         {
             SystemTime.Set(new DateTime(2000, 01, 01));
-            var stubEmployee = new List<IEmployee>
-            {
-                CreateDefaultEmployee()
-            };
             var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
-            fakeEmployeeRepository.List().Returns(stubEmployee);
-            ISalaryService service = new SalaryService(fakeEmployeeRepository);
+            var fakeEmployeeService = Substitute.For<IEmployeeService>();
+            fakeEmployeeService.BuildTree().Returns(CreateDefaultEmployee());
+            ISalaryService service = new SalaryService(fakeEmployeeRepository, fakeEmployeeService);
 
             double total = service.GetTotalSalary(SystemTime.Now);
 
@@ -46,8 +43,9 @@ namespace Infrastructure.Business.Tests
                 CreateDefaultEmployee()
             };
             var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
+            var fakeEmployeeService = Substitute.For<IEmployeeService>();
             fakeEmployeeRepository.List().Returns(stubEmployee);
-            ISalaryService service = new SalaryService(fakeEmployeeRepository);
+            ISalaryService service = new SalaryService(fakeEmployeeRepository, fakeEmployeeService);
 
             double total = service.GetTotalSalary(SystemTime.Now);
 
@@ -58,28 +56,74 @@ namespace Infrastructure.Business.Tests
         public void GetTotalSalary_ForFullTreelikeStructure_ReturnsTotalSalary()
         {
             SystemTime.Set(new DateTime(2000, 01, 01));
-            List<IEmployee> stubEmployees = CreateFullListOfEmployees();
+            IEmployee treeOfEmployees = CreateFullTreeOfEmployees();
             var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
-            fakeEmployeeRepository.List().Returns(stubEmployees);
-            ISalaryService service = new SalaryService(fakeEmployeeRepository);
+            var fakeEmployeeService = Substitute.For<IEmployeeService>();
+            fakeEmployeeService.BuildTree().Returns(treeOfEmployees);
+            ISalaryService service = new SalaryService(fakeEmployeeRepository, fakeEmployeeService);
 
             double total = service.GetTotalSalary(SystemTime.Now);
 
-            Assert.AreEqual(40921, total, 1);
+            Assert.AreEqual(40_895.37, total, 1);
         }
 
         [Test]
-        public void GetTotalSalary_ForBottomPartOfTreelikeStructure_ReturnsTotalSalary()
+        public void GetTotalSalary_ForBottomPartOfTree_ReturnsTotalSalary()
         {
             SystemTime.Set(new DateTime(2000, 01, 01));
-            List<IEmployee> stubEmployees = CreateSmallListOfEmployees();
             var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
-            fakeEmployeeRepository.List().Returns(stubEmployees);
-            ISalaryService service = new SalaryService(fakeEmployeeRepository);
+            var fakeEmployeeService = Substitute.For<IEmployeeService>();
+            fakeEmployeeService.BuildTree().Returns(CreateSmallTreeOfEmployees());
+            ISalaryService service = new SalaryService(fakeEmployeeRepository, fakeEmployeeService);
 
             double total = service.GetTotalSalary(SystemTime.Now);
 
             Assert.AreEqual(12155.42, total, 1);
+        }
+
+        [Test]
+        public void GetTotalSalary_ForFullTree_ReturnsTotalSalaryWithSubordinatesPercents()
+        {
+            SystemTime.Set(new DateTime(2000, 01, 01));
+            IEmployee stubTreeOfEmployees = CreateFullTreeOfEmployees();
+            var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
+            var fakeEmployeeService = Substitute.For<IEmployeeService>();
+            fakeEmployeeService.BuildTree().Returns(stubTreeOfEmployees);
+            ISalaryService service = new SalaryService(fakeEmployeeRepository, fakeEmployeeService);
+
+            double total = service.GetTotalSalary(SystemTime.Now);
+
+            Assert.AreEqual(40_895.37, total, 1);
+        }
+
+        [Test]
+        public void GetTotalSalary_ForMediumTree_ReturnsTotalSalaryWithSubordinatesPercents()
+        {
+            SystemTime.Set(new DateTime(2000, 01, 01));
+            IEmployee stubTreeOfEmployees = CreateMediTreeOfEmployees();
+            var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
+            var fakeEmployeeService = Substitute.For<IEmployeeService>();
+            fakeEmployeeService.BuildTree().Returns(stubTreeOfEmployees);
+            ISalaryService service = new SalaryService(fakeEmployeeRepository, fakeEmployeeService);
+
+            double total = service.GetTotalSalary(SystemTime.Now);
+
+            Assert.AreEqual(19_603.49, total, 1);
+        }
+
+        [Test]
+        public void GetTotalSalaryWithoutSubordinatesPercents_ForFullTree_ReturnsTotalSalaryWithSubordinatesPercents()
+        {
+            SystemTime.Set(new DateTime(2000, 01, 01));
+            List<IEmployee> fullListOfEmployees = CreateFullListOfEmployees();
+            var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
+            var fakeEmployeeService = Substitute.For<IEmployeeService>();
+            fakeEmployeeRepository.List().Returns(fullListOfEmployees);
+            ISalaryService service = new SalaryService(fakeEmployeeRepository, fakeEmployeeService);
+
+            double total = service.GetTotalSalaryWithoutSubordinatesPercents(SystemTime.Now);
+
+            Assert.AreEqual(40_650, total, 1);
         }
     }
 }
