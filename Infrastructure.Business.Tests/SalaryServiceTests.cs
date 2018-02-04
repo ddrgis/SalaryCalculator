@@ -100,7 +100,7 @@ namespace Infrastructure.Business.Tests
         public void GetTotalSalary_ForMediumTree_ReturnsTotalSalaryWithSubordinatesPercents()
         {
             SystemTime.Set(new DateTime(2000, 01, 01));
-            IEmployee stubTreeOfEmployees = CreateMediTreeOfEmployees();
+            IEmployee stubTreeOfEmployees = CreateMediumTreeOfEmployees();
             var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
             var fakeEmployeeService = Substitute.For<IEmployeeService>();
             fakeEmployeeService.BuildTree().Returns(stubTreeOfEmployees);
