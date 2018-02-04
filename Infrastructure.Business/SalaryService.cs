@@ -43,16 +43,5 @@ namespace Infrastructure.Business
                        currentEmployee.Subordinates.Aggregate(acc, CountSalaryIterator);
             }
         }
-
-        //todo: delete this method (YAGNI)
-        public double GetTotalSalaryWithoutSubordinatesPercents(DateTime? upToDate)
-        {
-            if (upToDate == null)
-            {
-                upToDate = SystemTime.Now;
-            }
-
-            return _repository.List().Aggregate(0.0, (sum, employee) => sum + employee.CountSalary(upToDate));
-        }
     }
 }

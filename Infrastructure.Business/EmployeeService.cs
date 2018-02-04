@@ -16,7 +16,7 @@ namespace Infrastructure.Business
             _repository = new EmployeeRepository();
         }
 
-        internal EmployeeService(IEmployeeRepository repository)
+        public EmployeeService(IEmployeeRepository repository)
         {
             _repository = repository;
         }
@@ -55,9 +55,16 @@ namespace Infrastructure.Business
 
                 foreach (IEmployee subordinate in subordinates)
                 {
-                    if (!subordinate.Subordinates.Any())
+                    if (subordinate.Subordinates == null)
                     {
-                        currentRoot.Subordinates.Add(subordinate);
+                        if (currentRoot.Subordinates == null)
+                        {
+                            currentRoot.Subordinates = new List<IEmployee>() { subordinate };
+                        }
+                        else
+                        {
+                            currentRoot.Subordinates.Add(subordinate);
+                        }
                     }
                     else
                     {

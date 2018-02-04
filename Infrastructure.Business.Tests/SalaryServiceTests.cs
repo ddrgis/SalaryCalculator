@@ -49,6 +49,7 @@ namespace Infrastructure.Business.Tests
 
             double total = service.GetTotalSalary(SystemTime.Now);
 
+            //todo: Добавить возможность расчета суммарной зарплаты для изолированных деревьев (когда нет одного общего босса)
             Assert.AreEqual(3150, total);
         }
 
@@ -109,21 +110,6 @@ namespace Infrastructure.Business.Tests
             double total = service.GetTotalSalary(SystemTime.Now);
 
             Assert.AreEqual(19_603.49, total, 1);
-        }
-
-        [Test]
-        public void GetTotalSalaryWithoutSubordinatesPercents_ForFullTree_ReturnsTotalSalaryWithSubordinatesPercents()
-        {
-            SystemTime.Set(new DateTime(2000, 01, 01));
-            List<IEmployee> fullListOfEmployees = CreateFullListOfEmployees();
-            var fakeEmployeeRepository = Substitute.For<IEmployeeRepository>();
-            var fakeEmployeeService = Substitute.For<IEmployeeService>();
-            fakeEmployeeRepository.List().Returns(fullListOfEmployees);
-            ISalaryService service = new SalaryService(fakeEmployeeRepository, fakeEmployeeService);
-
-            double total = service.GetTotalSalaryWithoutSubordinatesPercents(SystemTime.Now);
-
-            Assert.AreEqual(40_650, total, 1);
         }
     }
 }
