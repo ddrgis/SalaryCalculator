@@ -6,6 +6,8 @@ namespace Domain.Core.Interfaces
     public interface IEmployee
     {
         int Id { get; set; }
+        string FirstName { get; set; }
+        string LastName { get; set; }
         int? SuperiorId { get; set; }
         double BaseSalary { get; set; }
         DateTime DateOfEmployment { get; set; }
