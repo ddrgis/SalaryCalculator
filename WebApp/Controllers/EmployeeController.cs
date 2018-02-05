@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Domain.Interfaces;
 using Infrastructure.Database;
 using System.Web.Mvc;
@@ -42,15 +43,19 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create([Bind(Exclude = "Id")]EmployeeViewModel employeeViewModel)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
 
-                return RedirectToAction("Index");
+                //TODO: Add create logic here
+                return View();
             }
-            catch
+            catch 
             {
                 return View();
             }
