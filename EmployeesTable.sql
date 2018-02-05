@@ -11,6 +11,8 @@
 --	`Discriminator`	TEXT NOT NULL
 --);
 
+--DELETE FROM Employees;
+
 INSERT INTO Employees
 (Id, SuperiorId, FirstName, LastName, BaseSalary, DateOfEmployment, PercentageIncrementForYear, MaxPercentageIncrementForYear,
 PercentageIncrementFromSubordinates, Discriminator)

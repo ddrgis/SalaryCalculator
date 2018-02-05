@@ -25,9 +25,11 @@ namespace ConsoleSalaryCalculator
             IEmployee emp = repo.GetById(2);
             Console.WriteLine(emp.ToString());
 
-            emp.BaseSalary = 3000;
+            emp.BaseSalary += 100;
             repo.Edit(emp);
 
+            IEmployee toDelete = repo.GetById(7);
+            repo.Delete(toDelete);
 
             Console.ReadLine();
         }

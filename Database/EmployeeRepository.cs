@@ -61,7 +61,7 @@ namespace Infrastructure.Database
 
         public void Add(IEmployee entity)
         {
-            const string sql = "INSERT INTO Employees ( SuperiorId, FirstName, LastName, BaseSalary, DateOfEmployment, PercentageIncrementForYear, MaxPercentageIncrementForYear, PercentageIncrementFromSubordinates, Discriminator ) VALUES (@SuperiorId, @FirstName, @LastName, @BaseSalary, @DateOfEmployment, @PercentageIncrementForYear, @MaxPercentageIncrementForYear, @PercentageIncrementFromSubordinates, @Discriminator );";
+            const string sql = "INSERT INTO Employees ( SuperiorId, FirstName, LastName, BaseSalary, DateOfEmployment, PercentageIncrementForYear, MaxPercentageIncrementForYear, PercentageIncrementFromSubordinates, Discriminator ) VALUES (@SuperiorId, @FirstName, @LastName, @BaseSalary, @DateOfEmployment, @PercentageIncrementForYear, @MaxPercentageIncrementForYear, @PercentageIncrementFromSubordinates, @Discriminator )";
             try
             {
                 using (IDbConnection connection = CreateConnection())
@@ -87,32 +87,88 @@ namespace Infrastructure.Database
             }
         }
 
-        public void Delete(IEmployee entity)
+
+        private List<IEmployee> Subordinates(int? id)
         {
-            throw new NotImplementedException();
+            const string sql = "SELECT * FROM Employees WHERE SuperiorId = @Id";
+
+            var subordinates = new List<IEmployee>();
+            using (IDataReader reader = CreateConnection().ExecuteReader(sql, new {id}))
+            {
+                while (reader.Read())
+                {
+                    IEmployee employee = EmployeeFactory.Create(reader);
+                    subordinates.Add(employee);
+                }
+            }
+
+            return subordinates;
         }
 
-        public void Edit(IEmployee entity)
+        public void Delete(IEmployee entity)
         {
-            const string sql = "UPDATE Employees SET SuperiorId = @SuperiorId, FirstName = @FirstName, LastName = @LastName, BaseSalary = @BaseSalary, DateOfEmployment = @DateOfEmployment, PercentageIncrementForYear = @PercentageIncrementForYear, MaxPercentageIncrementForYear = @MaxPercentageIncrementForYear, PercentageIncrementFromSubordinates = @PercentageIncrementFromSubordinates, Discriminator = @Discriminator WHERE Id = @Id;";
+            const string sql = "DELETE FROM Employees WHERE Id = @Id";
+            
             try
             {
                 using (IDbConnection connection = CreateConnection())
                 {
+                    int? newSuperiorId = entity.SuperiorId;
                     connection.Open();
-                    connection.Execute(sql, new
+                    List<IEmployee> subordinates = Subordinates(entity.Id);
+                    using (IDbTransaction transaction = connection.BeginTransaction())
                     {
-                        entity.Id,
-                        entity.SuperiorId,
-                        entity.FirstName,
-                        entity.LastName,
-                        entity.BaseSalary,
-                        entity.DateOfEmployment,
-                        entity.PercentageIncrementForYear,
-                        entity.MaxPercentageIncrementForYear,
-                        entity.PercentageIncrementFromSubordinates,
-                        Discriminator = entity.GetType().Name
-                    });
+                        connection.Execute(sql, new
+                        {
+                            entity.Id
+                        });
+
+                        foreach (IEmployee subordinate in subordinates)
+                        {
+                            subordinate.SuperiorId = newSuperiorId;
+                            Edit(subordinate, connection);
+                        }
+
+                        transaction.Commit();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Can not delete employee ({entity})", ex);
+            }
+        }
+
+        //todo: refactor this. (connection argument)
+        public void Edit(IEmployee entity, IDbConnection connection = null)
+        {
+            const string sql = "UPDATE Employees SET SuperiorId = @SuperiorId, FirstName = @FirstName, LastName = @LastName, BaseSalary = @BaseSalary, DateOfEmployment = @DateOfEmployment, PercentageIncrementForYear = @PercentageIncrementForYear, MaxPercentageIncrementForYear = @MaxPercentageIncrementForYear, PercentageIncrementFromSubordinates = @PercentageIncrementFromSubordinates, Discriminator = @Discriminator WHERE Id = @Id";
+            string date = entity.DateOfEmployment.ToString("dd.MM.yyyy");
+            try
+            {
+                var sqlParams = new
+                {
+                    entity.Id,
+                    entity.SuperiorId,
+                    entity.FirstName,
+                    entity.LastName,
+                    entity.BaseSalary,
+                    DateOfEmployment = date,
+                    entity.PercentageIncrementForYear,
+                    entity.MaxPercentageIncrementForYear,
+                    entity.PercentageIncrementFromSubordinates,
+                    Discriminator = entity.GetType().Name
+                };
+                if (connection != null && connection.State == ConnectionState.Open)
+                {
+                    connection.Execute(sql, sqlParams);
+                    return;
+                }
+
+                using (connection = CreateConnection())
+                {
+                    connection.Open();
+                    connection.Execute(sql, sqlParams);
                 }
             }
             catch (Exception ex)

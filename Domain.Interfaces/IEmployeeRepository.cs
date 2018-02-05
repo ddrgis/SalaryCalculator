@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using Domain.Core.Interfaces;
 
 namespace Domain.Interfaces
@@ -13,6 +14,6 @@ namespace Domain.Interfaces
 
         void Delete(IEmployee entity);
 
-        void Edit(IEmployee entity);
+        void Edit(IEmployee entity, IDbConnection connection = null);
     }
 }
