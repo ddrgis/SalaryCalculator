@@ -7,9 +7,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
-using Dapper.Contrib;
-using System.Linq;
-using Dapper.Contrib.Extensions;
 
 namespace Infrastructure.Database
 {
@@ -64,13 +61,24 @@ namespace Infrastructure.Database
 
         public void Add(IEmployee entity)
         {
-            const string sql = "INSERT INTO Employees ( SuperiorId, FirstName, LastName, BaseSalary, DateOfEmployment, PercentageIncrementForYear, MaxPercentageIncrementForYear, PercentageIncrementFromSubordinates, Discriminator ) Values (@SuperiorId, @FirstName, @LastName, @BaseSalary, @DateOfEmployment, @PercentageIncrementForYear, @MaxPercentageIncrementForYear, @PercentageIncrementFromSubordinates, @Discriminator );";
+            const string sql = "INSERT INTO Employees ( SuperiorId, FirstName, LastName, BaseSalary, DateOfEmployment, PercentageIncrementForYear, MaxPercentageIncrementForYear, PercentageIncrementFromSubordinates, Discriminator ) VALUES (@SuperiorId, @FirstName, @LastName, @BaseSalary, @DateOfEmployment, @PercentageIncrementForYear, @MaxPercentageIncrementForYear, @PercentageIncrementFromSubordinates, @Discriminator );";
             try
             {
                 using (IDbConnection connection = CreateConnection())
                 {
                     connection.Open();
-                    connection.Execute(sql, new { entity.SuperiorId, entity.FirstName, entity.LastName, entity.BaseSalary, entity.DateOfEmployment, entity.PercentageIncrementForYear, entity.MaxPercentageIncrementForYear, entity.PercentageIncrementFromSubordinates, Discriminator = entity.GetType().Name});
+                    connection.Execute(sql, new
+                    {
+                        entity.SuperiorId,
+                        entity.FirstName,
+                        entity.LastName,
+                        entity.BaseSalary,
+                        entity.DateOfEmployment,
+                        entity.PercentageIncrementForYear,
+                        entity.MaxPercentageIncrementForYear,
+                        entity.PercentageIncrementFromSubordinates,
+                        Discriminator = entity.GetType().Name
+                    });
                 }
             }
             catch (Exception ex)
@@ -86,7 +94,31 @@ namespace Infrastructure.Database
 
         public void Edit(IEmployee entity)
         {
-            throw new NotImplementedException();
+            const string sql = "UPDATE Employees SET SuperiorId = @SuperiorId, FirstName = @FirstName, LastName = @LastName, BaseSalary = @BaseSalary, DateOfEmployment = @DateOfEmployment, PercentageIncrementForYear = @PercentageIncrementForYear, MaxPercentageIncrementForYear = @MaxPercentageIncrementForYear, PercentageIncrementFromSubordinates = @PercentageIncrementFromSubordinates, Discriminator = @Discriminator WHERE Id = @Id;";
+            try
+            {
+                using (IDbConnection connection = CreateConnection())
+                {
+                    connection.Open();
+                    connection.Execute(sql, new
+                    {
+                        entity.Id,
+                        entity.SuperiorId,
+                        entity.FirstName,
+                        entity.LastName,
+                        entity.BaseSalary,
+                        entity.DateOfEmployment,
+                        entity.PercentageIncrementForYear,
+                        entity.MaxPercentageIncrementForYear,
+                        entity.PercentageIncrementFromSubordinates,
+                        Discriminator = entity.GetType().Name
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Can not update employee ({entity})", ex);
+            }
         }
     }
 }

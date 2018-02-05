@@ -25,11 +25,8 @@ namespace ConsoleSalaryCalculator
             IEmployee emp = repo.GetById(2);
             Console.WriteLine(emp.ToString());
 
-            repo.Add(new Employee()
-            {
-                SuperiorId = 1, FirstName = "Test", LastName = "test", BaseSalary = 1000, DateOfEmployment = new DateTime(2000, 1, 1),
-                PercentageIncrementForYear = 3, MaxPercentageIncrementForYear = 30
-            });
+            emp.BaseSalary = 3000;
+            repo.Edit(emp);
 
 
             Console.ReadLine();
