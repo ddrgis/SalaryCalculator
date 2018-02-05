@@ -32,8 +32,8 @@ namespace WebApp.Controllers
         public ActionResult Details(int id)
         {
             IEmployee employee = _repository.GetById(id);
-
-            return View();
+            EmployeeViewModel viewModel = Mapper.Map<IEmployee, EmployeeViewModel>(employee);
+            return View(viewModel);
         }
 
         public ActionResult Create()

@@ -1,0 +1,81 @@
+﻿@model WebApp.Models.EmployeeViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SuperiorId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SuperiorId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaseSalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaseSalary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfEmployment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfEmployment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PercentageIncrementForYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PercentageIncrementForYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxPercentageIncrementForYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxPercentageIncrementForYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PercentageIncrementFromSubordinates)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PercentageIncrementFromSubordinates)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
