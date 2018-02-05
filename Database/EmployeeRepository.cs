@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
+using Dapper.Contrib;
 using System.Linq;
+using Dapper.Contrib.Extensions;
 
 namespace Infrastructure.Database
 {
@@ -62,7 +64,19 @@ namespace Infrastructure.Database
 
         public void Add(IEmployee entity)
         {
-            throw new NotImplementedException();
+            const string sql = "INSERT INTO Employees ( SuperiorId, FirstName, LastName, BaseSalary, DateOfEmployment, PercentageIncrementForYear, MaxPercentageIncrementForYear, PercentageIncrementFromSubordinates, Discriminator ) Values (@SuperiorId, @FirstName, @LastName, @BaseSalary, @DateOfEmployment, @PercentageIncrementForYear, @MaxPercentageIncrementForYear, @PercentageIncrementFromSubordinates, @Discriminator );";
+            try
+            {
+                using (IDbConnection connection = CreateConnection())
+                {
+                    connection.Open();
+                    connection.Execute(sql, new { entity.SuperiorId, entity.FirstName, entity.LastName, entity.BaseSalary, entity.DateOfEmployment, entity.PercentageIncrementForYear, entity.MaxPercentageIncrementForYear, entity.PercentageIncrementFromSubordinates, Discriminator = entity.GetType().Name});
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Can not insert employee ({entity}) into table", ex);
+            }
         }
 
         public void Delete(IEmployee entity)
