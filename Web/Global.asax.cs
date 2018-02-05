@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using AutoMapper;
+using Domain.Core.Interfaces;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Web.Models;
 
 namespace Web
 {
@@ -16,6 +15,8 @@ namespace Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Mapper.Initialize(cfg => cfg.CreateMap<IEmployee, EmployeeViewModel>());
         }
     }
 }
