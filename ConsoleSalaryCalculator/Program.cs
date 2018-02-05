@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces;
 using Infrastructure.Database;
 using System;
+using Domain.Core.Entities;
 using Domain.Core.Interfaces;
 
 namespace ConsoleSalaryCalculator
@@ -24,6 +25,11 @@ namespace ConsoleSalaryCalculator
             IEmployee emp = repo.GetById(2);
             Console.WriteLine(emp.ToString());
 
+            emp.BaseSalary += 100;
+            repo.Edit(emp);
+
+            IEmployee toDelete = repo.GetById(7);
+            repo.Delete(toDelete);
 
             Console.ReadLine();
         }
