@@ -4,6 +4,8 @@ namespace WebApp.Models
 {
     public class EmployeeViewModel
     {
+        public int Id { get; set; }
+        public int SuperiorId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public double BaseSalary { get; set; }

@@ -31,6 +31,8 @@ namespace WebApp.Controllers
 
         public ActionResult Details(int id)
         {
+            IEmployee employee = _repository.GetById(id);
+
             return View();
         }
 
